@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="namsor-client",
-    version="0.0.1",
+    version="0.0.2",
     author="Joseph Pallipadan",
     author_email="pallipadanjoseph@gmail.com",
     description="A Wrapper for the Namsor Classification API",

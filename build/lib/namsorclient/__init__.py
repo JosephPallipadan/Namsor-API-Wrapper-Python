@@ -1,5 +1,6 @@
 import requests
 
+
 class NamsorClient:
     api_key = ""
 
@@ -23,7 +24,7 @@ class GenderResponse:
     gender_scale = ""
     score = 0.0
     probability_calibrated = 0.0
-    
+
     def __init__(self, api_response: requests.models.Response):
         self.ID = api_response.json['id']
         self.first_name = api_response.json['firstName']
@@ -53,4 +54,4 @@ class GenderResponse:
 #     raceEthnicity = "W_NL"
 #     score = 0
 
-# class DiasporaResponse: 
+# class DiasporaResponse:

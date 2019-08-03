@@ -1,10 +1,10 @@
 Metadata-Version: 2.1
 Name: namsor-client
-Version: 0.0.1
-Summary: A small example package
+Version: 0.0.2
+Summary: A Wrapper for the Namsor Classification API
 Home-page: https://github.com/pypa/sampleproject
-Author: Example Author
-Author-email: author@example.com
+Author: Joseph Pallipadan
+Author-email: pallipadanjoseph@gmail.com
 License: UNKNOWN
 Description: # Example Package
         
