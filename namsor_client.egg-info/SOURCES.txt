@@ -3,5 +3,6 @@ setup.py
 namsor_client.egg-info/PKG-INFO
 namsor_client.egg-info/SOURCES.txt
 namsor_client.egg-info/dependency_links.txt
+namsor_client.egg-info/requires.txt
 namsor_client.egg-info/top_level.txt
 namsorclient/__init__.py
