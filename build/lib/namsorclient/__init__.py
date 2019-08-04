@@ -1,9 +1,11 @@
 import requests
 
+from models import GenderResponse
+
+BASE_URL = "https://v2.namsor.com/NamSorAPIv2/api2/json/"
+
 
 class NamsorClient:
-    api_key = ""
-
     def __init__(self, api_key):
         self.api_key = api_key
         test_response = self.api_get()
@@ -12,28 +14,15 @@ class NamsorClient:
         elif test_response.status_code == 403:
             raise Exception("API Key Limit Reached")
 
-    def api_get(self, url="https://v2.namsor.com/NamSorAPIv2/api2/json/gender/Lelouch/Lamperouge"):
-        return requests.get(url=url, headers={"X-API-KEY": self.api_key})
+    def api_get(self, url="gender/Lelouch/Lamperouge") -> requests.models.Response:
+        return requests.get(url=f"{BASE_URL}{url}", headers={"X-API-KEY": self.api_key})
 
+    def api_post(self, url, data) -> requests.models.Response:
+        return requests.post(url=f"{BASE_URL}{url}", headers={"X-API-KEY": self.api_key}, json=data)
 
-class GenderResponse:
-    ID = ""
-    first_name = ""
-    last_name = ""
-    likely_gender = ""
-    gender_scale = ""
-    score = 0.0
-    probability_calibrated = 0.0
+    def gender(self, first_name: str, last_name: str) -> GenderResponse:
+        return GenderResponse(self.api_get(url=f"gender/{first_name}/{last_name}"))
 
-    def __init__(self, api_response: requests.models.Response):
-        self.ID = api_response.json['id']
-        self.first_name = api_response.json['firstName']
-        self.last_name = api_response.json['lastName']
-        self.likely_gender = api_response.json['likelyGender']
-        self.gender_scale = int(api_response.json['genderScale'])
-        self.score = float(api_response.json['score'])
-        self.probability_calibrated = float(
-            api_response.json['probabilityCalibrated'])
 
 # class originResponse:
 #     ID = ""

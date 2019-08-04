@@ -6,3 +6,4 @@ namsor_client.egg-info/dependency_links.txt
 namsor_client.egg-info/requires.txt
 namsor_client.egg-info/top_level.txt
 namsorclient/__init__.py
+namsorclient/models.py
