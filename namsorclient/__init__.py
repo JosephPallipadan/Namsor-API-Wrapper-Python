@@ -1,5 +1,6 @@
 import requests
 
+from country_codes import CountryCodes
 from models import GenderResponse
 
 BASE_URL = "https://v2.namsor.com/NamSorAPIv2/api2/json/" 
@@ -9,11 +10,11 @@ class NamsorClient:
     A class representing a NamsorAPI client
 
     Attributes:
-        api_key(str): the NamsorAPI key the client receives after signing in
+        api_key(str): The Namsor API key of the user.
     """
     def __init__(self, api_key):
         self.api_key = api_key
-        test_response = self.api_get()
+        test_response = self.__api_get()
         if test_response.status_code == 401:
             raise Exception('Invalid API Key')
             # The client has not entered his/her API key or the API key is incorrect
@@ -21,7 +22,7 @@ class NamsorClient:
             raise Exception("API Limit Reached or API Key Disabled")
             # The client's amount of requests has reached the maximum amount he/she can send in a month or his/her subscription plan has been cancelled
 
-    def api_get(self, url="gender/Lelouch/Lamperouge") -> requests.models.Response:
+    def __api_get(self, url="gender/Lelouch/Lamperouge") -> requests.models.Response:
         """ returns a response containing desired information of the data
         
         Args:
@@ -32,7 +33,7 @@ class NamsorClient:
         """
         return requests.get(url=f"{BASE_URL}{url}", headers={"X-API-KEY": self.api_key})
 
-    def api_post(self, url, data) -> requests.models.Response:
+    def __api_post(self, url, data) -> requests.models.Response:
         """ returns a response containing desired information of the data
         
         Args:
@@ -45,35 +46,30 @@ class NamsorClient:
         return requests.post(url=f"{BASE_URL}{url}", headers={"X-API-KEY": self.api_key}, json=data)
 
     def gender(self, first_name: str, last_name: str) -> GenderResponse:
-        """ Returns a GenderResponse object containing gender data 
+        """ Infer the likely gender of a name.
         
         Args:
-            first_name (str): the desired first name 
-            last_name (str): the desired last name
+            first_name (str): The desired first name. 
+            last_name (str): The desired last name.
         
         Returns:
-            GenderResponse: a GenderResponse object that contains gender data
+            GenderResponse: An Object which is a wrapper of the API's response object for this particular endpoint.
         """
-        return GenderResponse(self.api_get(url=f"gender/{first_name}/{last_name}"))
 
+        url = f"gender/{first_name}/{last_name}"
+        return GenderResponse(self.__api_get(url=url))
 
-# class originResponse:
-#     ID = ""
-#     firstName = ""
-#     lastName = ""
-#     countryOrigin = ""
-#     countryOriginAlt = ""
-#     score = ""
-#     regionOrigin = ""
-#     topRegionOrigin = ""
-#     subRegionOrigin = ""
-
-# class RaceEthnicityResponse:
-#     ID = ""
-#     firstName = ""
-#     lastName = ""
-#     raceEthnicityAlt =  "W_NL"
-#     raceEthnicity = "W_NL"
-#     score = 0
-
-# class DiasporaResponse:
+    def genderGeo(self, first_name: str, last_name: str, country_code: CountryCodes) -> GenderResponse:
+        """Infer the likely gender of a name, given a local context (ISO2 country code).
+        
+        Args:
+            first_name (str): The desired first name.
+            last_name (str): The desired last name.
+            country_code (CountryCodes): The country code, to be passed using the CountryCodes object.
+        
+        Returns:
+            GenderResponse: An Object which is a wrapper of the API's response object for this particular endpoint.
+        """
+        url = f"genderGeo/{first_name}/{last_name}/{country_code.value}"
+        return GenderResponse(self.__api_get(url=url))
+        
