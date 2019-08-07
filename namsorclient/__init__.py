@@ -1,7 +1,9 @@
 import requests
 
+import helpers
 from country_codes import CountryCodes
 from models import GenderResponse
+from request_objects import GenderBatch
 
 BASE_URL = "https://v2.namsor.com/NamSorAPIv2/api2/json/" 
 
@@ -72,4 +74,41 @@ class NamsorClient:
         """
         url = f"genderGeo/{first_name}/{last_name}/{country_code.value}"
         return GenderResponse(self.__api_get(url=url))
+
+    def genderBatch(self, item_group: GenderBatch) -> list:
+        personal_names_list = helpers.gender_batch_item_converter(item_group)
+        
+        gender_response_list = []
+        url = "genderBatch"
+        item_list = helpers.list_seperator(personal_names_list)
+
+        for item in item_list:
+            payload = {}
+            payload['personalNames'] = item
+
+            a = self.__api_post(url=url, data=payload).json()['personalNames']
+            
+            for i in len(a):
+                gender_response_list.append(GenderResponse(a[i]))
+        
+        return gender_response_list
+
+
+
+# final_names = []
+# for i in names_arr:
+#     parts = i.strip().replace(',', '').split('\xa0')
+#     name = {}
+#     try:
+#         name['firstName'] = parts[1]
+#         name['lastName'] = parts[0]
+#         final_names.append(name)
+#     except:
+#         pass
+
+# payload1 = {}
+# payload1['personalNames'] = final_names[:100]
+
+# r = requests.post(url='https://v2.namsor.com/NamSorAPIv2/api2/json/genderBatch',
+#                   headers={"X-API-KEY": "4bd52d2351b507768236ae6acfa2894e"}, json=payload1)
         
