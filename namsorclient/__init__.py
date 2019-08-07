@@ -3,7 +3,12 @@ import requests
 import helpers
 from country_codes import CountryCodes
 from models import GenderResponse
+<<<<<<< HEAD
 from request_objects import GenderBatch
+=======
+import helpers
+import json
+>>>>>>> 3e3175a764eec07d6ee72414de8be581c75c2f74
 
 BASE_URL = "https://v2.namsor.com/NamSorAPIv2/api2/json/" 
 
@@ -39,7 +44,9 @@ class NamsorClient:
         """ returns a response containing desired information of the data
         
         Args:
+        
             url (str): ending portion of NamsorAPI url to desired section 
+
             data (dict): the high throughput data to process
         
         Returns:
@@ -59,7 +66,36 @@ class NamsorClient:
         """
 
         url = f"gender/{first_name}/{last_name}"
-        return GenderResponse(self.__api_get(url=url))
+        return GenderResponse(self.__api_get(url=url).json())
+
+    def genderBatch(self, data:list) -> list:
+        """Infer the likely gender of multiple names, detecting automatically the cultural context
+        
+        Args:
+            data (list): a list of any number of dictionaries containing information on the id, first name, and last name
+            
+        
+        Returns:
+            list: a list of GenderResponse objects which are wrappers of the API's response object for this particular endpoint.
+        """
+        url = "genderBatch"
+        gender_response_list = []
+        list_of_lists = helpers.list_seperator(data)
+        if len(data) < 100:
+            personal_names_dict={
+                "personalNames":data
+            }
+            response_list = self.__api_post(url=url, data=personal_names_dict).json()
+        for i in range(len(list_of_lists)):
+            if len(data) > 100:
+                personal_names_dict = {
+                "personalNames":list_of_lists[i]
+                }
+                response_dict = self.__api_post(url=url, data=personal_names_dict).json()['personalNames'][i]
+            else:
+                response_dict = response_list['personalNames'][i]
+            gender_response_list.append(GenderResponse(response_dict))
+        return gender_response_list
 
     def genderGeo(self, first_name: str, last_name: str, country_code: CountryCodes) -> GenderResponse:
         """Infer the likely gender of a name, given a local context (ISO2 country code).
