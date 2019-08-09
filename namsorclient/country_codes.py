@@ -1,4 +1,6 @@
 from enum import Enum
+
+
 class CountryCodes(Enum):
     Aland_Islands = "AX"
     Albania = "AL"

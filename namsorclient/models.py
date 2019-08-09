@@ -20,29 +20,30 @@ class GenderResponse:
         Args:
             api_response (dict): the json format (dict) of the NamsorAPI response received from a GET/POST request
         """
-       response_json = api_response.json()
-       self.ID = response_json['id']
-       self.first_name = response_json['firstName']
-       self.last_name = response_json['lastName']
-       self.likely_gender = response_json['likelyGender']
-       self.gender_scale = int(response_json['genderScale'])
-       self.score = float(response_json['score'])
-       self.probability_calibrated = float(response_json['probabilityCalibrated'])
-       # Initializing the GenderResponse attributes with values of corresponding attribute names or keys of the API response in json format
+
+        self.ID = api_response['id']
+        self.first_name = api_response['firstName']
+        self.last_name = api_response['lastName']
+        self.likely_gender = api_response['likelyGender']
+        self.gender_scale = int(api_response['genderScale'])
+        self.score = float(api_response['score'])
+        self.probability_calibrated = float(api_response['probabilityCalibrated'])
+        # Initializing the GenderResponse attributes with values of corresponding attribute names or keys of the API responsein json format
 
 
-# class originResponse:
+class OriginResponse:
 
-#     def _init_(self, )
-#     ID = ""
-#     firstName = ""
-#     lastName = ""
-#     countryOrigin = ""
-#     countryOriginAlt = ""
-#     score = ""
-#     regionOrigin = ""
-#     topRegionOrigin = ""
-#     subRegionOrigin = ""
+
+    def __init__(self, api_response: dict):
+        self.ID = api_response['id']
+        self.first_name = api_response['firstName']
+        self.last_name = api_response['lastName']
+        self.country_origin = api_response['countryOrigin']
+        self.country_origin_alt = int(api_response['countryOriginAlt'])
+        self.score = float(api_response['score'])
+        self.region_origin = float(api_response['regionOrigin'])
+        self.top_region_origin = api_response['top_region_origin']
+        self.sub_region_origin = api_response['sub_region_origin']
 
 # class RaceEthnicityResponse:
 #     ID = ""
@@ -53,3 +54,4 @@ class GenderResponse:
 #     score = 0
 
 # class DiasporaResponse:
+
