@@ -77,7 +77,7 @@ class NamsorClient:
             GenderResponse: An Object which is a wrapper of the API's response object for this particular endpoint.
         """
         url = f"genderGeo/{first_name}/{last_name}/{country_code.value}"
-        return GenderResponse(self.__api_get(url=url))
+        return GenderResponse(self.__api_get(url=url).json())
 
     def genderBatch(self, item_group: GenderBatch) -> list:
         """Infer the likely gender of multiple names, detecting automatically the cultural context
@@ -121,25 +121,31 @@ class NamsorClient:
         
         return gender_response_list
 
-    # def batch(self, item_group: Batch) -> list:
-    #     personal_names_list = helpers.gender_batch_item_converter(item_group)
+    def batch(self, item_group: Batch) -> list:
+        url = item_group.url
+
+        item_group.items_list = item_group.batch_item_converter()
+
+        response_list = []
+        item_list = helpers.list_seperator(item_group.items_list)
+
+        for item in item_list:
+            payload = {}
+            payload['personalNames'] = item
+            a = self.__api_post(url=url, data=payload).json()['personalNames']
+            for i in range(len(a)):
+                response_list.append(item_group.response_type(a[i]))
         
-    #     response_list = []
-    #     item_list = helpers.list_seperator(personal_names_list)
-
-    #     for item in item_list:
-    #         payload = {}
-    #         payload['personalNames'] = item
-    #         a = self.__api_post(url=url, data=payload).json()['personalNames']
-    #         for i in range(len(a)):
-    #             response_list.append(GenderResponse(a[i]))
-        
-    #     return response_list
+        return response_list
         
 
+client = NamsorClient("eaff2a8f0bd80d065c431b8a60dc69a9")
 
+data = US_RaceEthnicityBatch()
 
-
+data.addItem("Tarek","Ali",CountryCodes.United_States)
+a = client.batch(data)
+print(a[0].race_ethnicity_alt)
 
 
 
