@@ -164,8 +164,8 @@ class NamsorClient:
             GenderResponse: An Object which is a wrapper of the API's response object for this particular endpoint.
         """
 
-    url = f"genderFull/{full_name}"
-    return GenderResponse(self.__api_get(url=url).json())
+        url = f"genderFull/{full_name}"
+        return GenderResponse(self.__api_get(url=url).json())
 
     def usRaceEthnicity(self, first_name: str, last_name: str) -> RaceEthnicityResponse:
         """Infer a US resident's likely race/ethnicity according to US Census taxonomy W_NL (white, non latino), HL (hispano latino),  A (asian, non latino), B_NL (black, non latino).
