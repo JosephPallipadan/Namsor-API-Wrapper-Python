@@ -288,7 +288,7 @@ class US_RaceEthnicityBatch(Batch):
 
     def __init__(self):
         self.items = []
-        self.response_type = US_RaceEthnicityResponse
+        self.response_type = RaceEthnicityResponse
     
 
     
@@ -322,7 +322,7 @@ class US_ZipRaceEthnicityBatch(Batch):
 
     def __init__(self):
         self.items = []
-        self.response_type = US_RaceEthnicityResponse
+        self.response_type = RaceEthnicityResponse
     
 
     
