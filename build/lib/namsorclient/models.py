@@ -80,11 +80,30 @@ class OriginResponse:
         self.first_name = api_response['firstName']
         self.last_name = api_response['lastName']
         self.country_origin = api_response['countryOrigin']
-        self.country_origin_alt = int(api_response['countryOriginAlt'])
+        self.country_origin_alt = api_response['countryOriginAlt']
         self.score = float(api_response['score'])
-        self.region_origin = float(api_response['regionOrigin'])
-        self.top_region_origin = api_response['top_region_origin']
-        self.sub_region_origin = api_response['sub_region_origin']
+        self.region_origin = api_response['regionOrigin']
+        self.top_region_origin = api_response['topRegionOrigin']
+        self.sub_region_origin = api_response['subRegionOrigin']
+
+
+class CountryResponse:
+
+    def __init__(self, api_response: dict):
+        """ Constructor
+
+        Args:
+            api_response (dict): the json format (dict) of the NamsorAPI response received from a GET/POST request
+        """
+
+        self.ID = api_response['id']
+        self.name = api_response['name']
+        self.score = float(api_response['score'])
+        self.country = api_response['country']
+        self.country_alt = api_response['countryAlt']
+        self.region = api_response['region']
+        self.top_region = api_response['topRegion']
+        self.sub_region = api_response['subRegion']
 
 
 class RaceEthnicityResponse:
@@ -214,12 +233,20 @@ class NameParserTypeWrapper:
             raw_string (str): The raw string in the response object representing the value of the 'nameParserType' key.
         """
         self.raw_string = raw_string
-        regex = re.fullmatch(r"FN([0-9]+)LN([0-9]+)", raw_string)
-        self.first_name_count = int(regex.groups()[0])
-        self.last_name_count = int(regex.groups()[1])
+
+        if raw_string != "null":
+            print(raw_string)
+            regex = re.fullmatch(r"LN([0-9]+)FN([0-9]+)", raw_string)
+            self.first_name_count = int(regex.groups()[0])
+            self.last_name_count = int(regex.groups()[1])
 
     def __repr__(self):
-        return self._raw_string
+        return self.raw_string
+
+    def __eq__(self, other):
+        return self.first_name_count == other.first_name_count \
+            and self.last_name_count == other.last_name_count \
+            and self.raw_string == str(other)
 
 
 class FirstLastNameWrapper:
@@ -247,4 +274,7 @@ class FirstLastNameWrapper:
     def __repr__(self):
         return f'First Name: {self.first_name} | Last Name: {self.last_name}'
 
-
+    def __eq__(self, other):
+        return self.first_name == other.first_name \
+            and self.last_name == other.last_name \
+            and self.ID == other.ID

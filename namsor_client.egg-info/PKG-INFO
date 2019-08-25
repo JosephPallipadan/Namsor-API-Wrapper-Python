@@ -1,8 +1,8 @@
 Metadata-Version: 2.1
 Name: namsor-client
-Version: 0.0.3
+Version: 0.0.4
 Summary: A Wrapper for the Namsor Classification API
-Home-page: https://github.com/pypa/sampleproject
+Home-page: https://github.com/JosephPallipadan/Namsor-API-Wrapper-Python
 Author: Joseph Pallipadan
 Author-email: pallipadanjoseph@gmail.com
 License: UNKNOWN
