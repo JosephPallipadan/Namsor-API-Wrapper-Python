@@ -13,7 +13,7 @@ setuptools.setup(
     description="A Wrapper for the Namsor Classification API",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/pypa/sampleproject",
+    url="https://github.com/JosephPallipadan/Namsor-API-Wrapper-Python",
     packages=setuptools.find_packages(),
     install_requires=[
         'requests',

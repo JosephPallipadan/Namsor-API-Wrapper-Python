@@ -1,14 +1,11 @@
+import json
 import requests
 
-from country_codes import CountryCodes
-from models import GenderResponse
-from models import OriginResponse
-from models import DiasporaResponse
-from models import ParseNameResponse
-from models import RaceEthnicityResponse
+from helpers import *
+from models import *
 from request_objects import *
-import helpers
-import json
+from country_codes import CountryCodes
+
 
 BASE_URL = "https://v2.namsor.com/NamSorAPIv2/api2/json/"
 
@@ -81,7 +78,7 @@ class NamsorClient:
             GenderResponse: An Object which is a wrapper of the API's response object for this particular endpoint.
         """
         url = f"genderGeo/{first_name}/{last_name}/{country_code.value}"
-        return GenderResponse(self.__api_get(url=url))
+        return GenderResponse(self.__api_get(url=url).json())
 
     def genderBatch(self, item_group: GenderBatch) -> list:
         """Infer the likely gender of multiple names, detecting automatically the cultural context
@@ -125,20 +122,21 @@ class NamsorClient:
 
         return gender_response_list
 
-    # def batch(self, item_group: Batch) -> list:
-    #     personal_names_list = helpers.gender_batch_item_converter(item_group)
+    def batch(self, item_group: Batch) -> list:
+        personal_names_list = item_group.batch_item_converter()
 
-    #     response_list = []
-    #     item_list = helpers.list_seperator(personal_names_list)
+        response_list = []
+        item_list = helpers.list_seperator(personal_names_list)
 
-    #     for item in item_list:
-    #         payload = {}
-    #         payload['personalNames'] = item
-    #         a = self.__api_post(url=url, data=payload).json()['personalNames']
-    #         for i in range(len(a)):
-    #             response_list.append(GenderResponse(a[i]))
+        for item in item_list:
+            payload = {}
+            payload['personalNames'] = item
+            a = self.__api_post(url=item_group.url, data=payload).json()[
+                'personalNames']
+            for i in range(len(a)):
+                response_list.append(item_group.response_type(a[i]))
 
-    #     return response_list
+        return response_list
 
     def genderFullGeo(self, full_name: str, country_code: CountryCodes) -> GenderResponse:
         """Infer the likely gender of a full name, given a local context (ISO2 country code).
@@ -210,7 +208,7 @@ class NamsorClient:
         url = f"diaspora/{country_code.value}/{first_name}/{last_name}"
         return DiasporaResponse(self.__api_get(url=url).json())
 
-    def parseNameGeo(self, full_name: str, coutry_code: CountryCodes) -> ParseNameResponse:
+    def parseNameGeo(self, full_name: str, country_code: CountryCodes) -> ParseNameResponse:
         """Infer the likely first/last name structure of a name, ex. John Smith or SMITH, John or SMITH; John, given an ISO2 country of residence.
 
         Args:
@@ -238,7 +236,7 @@ class NamsorClient:
         url = f"origin/{first_name}/{last_name}"
         return OriginResponse(self.__api_get(url=url).json())
 
-    def country(self, full_name: str) -> OriginResponse:
+    def country(self, full_name: str) -> CountryResponse:
         """Infer the likely country of residence of a personal full name, or one surname. Assumes names as they are in the country of residence OR the country of origin.
 
         Args:
@@ -257,8 +255,8 @@ class NamsorClient:
         Args:
             full_name (str): The name to be parsed
 
-        Returns:
-            ParseNameResponse: An object which is a wrapper of the API's response object for this particular endpoint.
+        Returns: 
+        ParseNameResponse: An object which is a wrapper of the API's response object for this particular endpoint.
         """
 
         url = f"parseName/{full_name}"

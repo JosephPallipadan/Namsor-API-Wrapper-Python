@@ -254,3 +254,9 @@ class CountryCodes(Enum):
     Yemen = "YE"
     Zambia = "ZM"
     Zimbabwe = "ZW"
+
+
+def create(value: str) -> CountryCodes:
+    for country in CountryCodes:
+        if country.value == value:
+            return country

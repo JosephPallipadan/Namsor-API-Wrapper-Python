@@ -10,3 +10,5 @@ namsorclient/country_codes.py
 namsorclient/helpers.py
 namsorclient/models.py
 namsorclient/request_objects.py
+namsorclient/tests/__init__.py
+namsorclient/tests/test_NameParserType.py
