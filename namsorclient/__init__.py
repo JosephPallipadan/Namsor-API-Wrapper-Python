@@ -1,7 +1,6 @@
 import json
 import requests
 
-from helpers import *
 from models import *
 from request_objects import *
 from country_codes import CountryCodes
@@ -52,6 +51,22 @@ class NamsorClient:
         """
         return requests.post(url=f"{BASE_URL}{url}", headers={"X-API-KEY": self.api_key}, json=data)
 
+    def batch(self, item_group: Batch) -> list:
+        personal_names_list = item_group.batch_item_converter()
+
+        response_list = []
+        item_list = helpers.list_seperator(personal_names_list)
+
+        for item in item_list:
+            payload = {}
+            payload['personalNames'] = item
+            response = self.__api_post(url=item_group.url, data=payload).json()[
+                'personalNames']
+            for i in range(len(response)):
+                response_list.append(item_group.response_type(response[i]))
+
+        return response_list
+
     def gender(self, first_name: str, last_name: str) -> GenderResponse:
         """ Infer the likely gender of a name.
 
@@ -79,64 +94,6 @@ class NamsorClient:
         """
         url = f"genderGeo/{first_name}/{last_name}/{country_code.value}"
         return GenderResponse(self.__api_get(url=url).json())
-
-    def genderBatch(self, item_group: GenderBatch) -> list:
-        """Infer the likely gender of multiple names, detecting automatically the cultural context
-
-        Args:
-            data (list): a list of any number of dictionaries containing information on the id, first name, and last name
-
-
-        Returns:
-            list: a list of GenderResponse objects which are wrappers of the API's response object for this particular endpoint.
-        """
-
-        url = "genderBatch"
-        personal_names_list = helpers.gender_batch_item_converter(item_group)
-
-        gender_response_list = []
-        item_list = helpers.list_seperator(personal_names_list)
-
-        for item in item_list:
-            payload = {}
-            payload['personalNames'] = item
-            a = self.__api_post(url=url, data=payload).json()['personalNames']
-            for i in range(len(a)):
-                gender_response_list.append(GenderResponse(a[i]))
-
-        return gender_response_list
-
-    def parsedGenderBatch(self, item_group: ParsedGenderBatch) -> list:
-        url = "parsedGenderBatch"
-        personal_names_list = helpers.gender_batch_item_converter(item_group)
-
-        gender_response_list = []
-        item_list = helpers.list_seperator(personal_names_list)
-
-        for item in item_list:
-            payload = {}
-            payload['personalNames'] = item
-            a = self.__api_post(url=url, data=payload).json()['personalNames']
-            for i in range(len(a)):
-                gender_response_list.append(GenderResponse(a[i]))
-
-        return gender_response_list
-
-    def batch(self, item_group: Batch) -> list:
-        personal_names_list = item_group.batch_item_converter()
-
-        response_list = []
-        item_list = helpers.list_seperator(personal_names_list)
-
-        for item in item_list:
-            payload = {}
-            payload['personalNames'] = item
-            a = self.__api_post(url=item_group.url, data=payload).json()[
-                'personalNames']
-            for i in range(len(a)):
-                response_list.append(item_group.response_type(a[i]))
-
-        return response_list
 
     def genderFullGeo(self, full_name: str, country_code: CountryCodes) -> GenderResponse:
         """Infer the likely gender of a full name, given a local context (ISO2 country code).
