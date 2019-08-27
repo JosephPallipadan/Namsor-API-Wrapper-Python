@@ -52,10 +52,11 @@ class NamsorClient:
         return requests.post(url=f"{BASE_URL}{url}", headers={"X-API-KEY": self.api_key}, json=data)
 
     def batch(self, item_group: Batch) -> list:
+        
         personal_names_list = item_group.batch_item_converter()
 
         response_list = []
-        item_list = helpers.list_seperator(personal_names_list)
+        item_list = list_separator(personal_names_list)
 
         for item in item_list:
             payload = {}
