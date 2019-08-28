@@ -8,7 +8,9 @@
 ## Usage
 
 ```python
-from namsorclient import *
+from namsorclient import NamsorClient
+from namsorclient.country_codes import CountryCodes
+from namsorclient.request_objects import *
 
 
 # Create an instance of NamsorClient and pass in your API key as an argument
