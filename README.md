@@ -1,4 +1,49 @@
-## *namsor-client* is a python package that serves as a wrapper for the Namsor classification API.
+## Overview
+*namsor-client* is a python package that serves as a wrapper for the Namsor classification API.
+
+## Installation
+
+```pip install namsor-client```
+
+## Usage
+
+```python
+from namsorclient import *
+
+
+# Create an instance of NamsorClient and pass in your API key as an argument
+client = NamsorClient("Insert API key")
+
+# Access the gender (GET) endpoint with function that returns a response of type GenderResponse
+response = client.gender("Lelouch","Lamperouge")
+
+# Access the different parts of the response for this particular endpoint
+
+print(response.ID)
+print(response.first_name)
+print(response.last_name)
+print(response.likely_gender)
+print(response.gender_scale)
+print(response.score)
+print(response.probability_calibrated)
+
+# Refer to Responses section to view all different variables of each different Response
+
+
+# Access the genderBatch (POST) endpoint
+gender_batch = GenderBatch()
+
+# Add items, with required arguments, to the batch you want
+gender_batch.addItem("Lelouch","Lamperouge","A2140")
+gender_batch.addItem("Gon","Freecs", "M0245")
+gender_batch.addItem("Jonathan","Joestar", "M0014")
+
+response_list = client.batch(gender_batch)
+
+print(response_list[2].likely_gender)
+
+
+```
 
 ## API
 
@@ -136,6 +181,8 @@
   - ```score```
 
 ## Batches
+The wrapper also exposes batch functions for each of the different classifications. These are to be used when multiple items need to be classified together.
+
 - ```GenderBatch``` *returns GenderResponse*
 - ```GenderGeoBatch``` *returns GenderResponse*
 - ```ParsedGenderBatch``` *returns GenderResponse*
@@ -150,50 +197,7 @@
 - ```ParseNameBatch``` *returns ParsedNameResponse*
 - ```ParseNameGeoBatch``` *returns ParsedNameResponse*
 
-##Country Codes
+
+## Country Codes
 Whenever a country code needs to be passed to any function, the CountryCodes class should be used. It exposes an enum with all recognized country codes of the world marked by the respective country's name.
-
-## Installation
-
-```pip install namsor-client```
-
-## Usage
-
-```python
-from namsorclient import *
-
-
-# Create an instance of NamsorClient and pass in your API key as an argument
-client = NamsorClient("Insert API key")
-
-# Access the gender (GET) endpoint with function that returns a response of type GenderResponse
-response = client.gender("Lelouch","Lamperouge")
-
-# Access the different parts of the response for this particular endpoint
-
-print(response.ID)
-print(response.first_name)
-print(response.last_name)
-print(response.likely_gender)
-print(response.gender_scale)
-print(response.score)
-print(response.probability_calibrated)
-
-# Refer to Responses section to view all different variables of each different Response
-
-
-# Access the genderBatch (POST) endpoint
-gender_batch = GenderBatch()
-
-# Add items, with required arguments, to the batch you want
-gender_batch.addItem("Lelouch","Lamperouge","A2140")
-gender_batch.addItem("Gon","Freecs", "M0245")
-gender_batch.addItem("Jonathan","Joestar", "M0014")
-
-response_list = client.batch(gender_batch)
-
-print(response_list[2].likely_gender)
-
-
-```
 
