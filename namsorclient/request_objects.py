@@ -682,7 +682,7 @@ class US_RaceEthnicityBatch(Batch):
 
 class US_ZipRaceEthnicityBatch(Batch):
     """
-        A class representing a batch of items whose data is used to infer a US resident's likely race/ethnicity according to US Census taxonomy, using (optional) ZIP5 code info. Output is W_NL (white, non latino), HL (hispano latino),  A (asian, non latino), B_NL (black, non latino).
+        A class representing a batch of items whose data is used to infer a US resident's likely race/ethnicity according to US Census taxonomy, using ZIP5 code info. Output is W_NL (white, non latino), HL (hispano latino),  A (asian, non latino), B_NL (black, non latino).
 
         Attributes:
             url (str): ending portion of NamsorAPI url to desired section.
@@ -966,13 +966,12 @@ class ParseNameGeoBatch(Batch):
 
 
 def list_separator(data: list) -> list:
-    """ Separates list of dictionaries representing batch items' data into multiple lists each having a maximum of 100 dictionaries
-
+    """ Function used to transform the batch arrays into blocks to bypass the 100 item limit.
     Args:
-        data (list): a list of dictionaries each containing each batch item's data
+        data (list): The list to be separated.
 
     Returns:
-        list: a list of lists each having a maximum of 100 dictionaries
+        list: A list of lists each having a maximum of 100 items.
     """
     big_list = []
     total_num = math.ceil(len(data)/100)
