@@ -154,7 +154,7 @@ class DiasporaResponse:
     """
 
     ID = ""
-    fist_name = ""
+    first_name = ""
     last_name = ""
     score = 0.0
     ethnicity_alt = ""

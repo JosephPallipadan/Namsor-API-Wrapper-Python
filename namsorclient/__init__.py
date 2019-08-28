@@ -1,5 +1,6 @@
 import json
 import requests
+import time
 
 from models import *
 from request_objects import *
@@ -52,7 +53,7 @@ class NamsorClient:
         return requests.post(url=f"{BASE_URL}{url}", headers={"X-API-KEY": self.api_key}, json=data)
 
     def batch(self, item_group: Batch) -> list:
-        
+
         personal_names_list = item_group.batch_item_converter()
 
         response_list = []
@@ -65,6 +66,7 @@ class NamsorClient:
                 'personalNames']
             for i in range(len(response)):
                 response_list.append(item_group.response_type(response[i]))
+            time.sleep(1)
 
         return response_list
 
