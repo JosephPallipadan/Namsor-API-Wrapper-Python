@@ -168,6 +168,19 @@ class NamsorClient:
         url = f"diaspora/{country_code.value}/{first_name}/{last_name}"
         return DiasporaResponse(self.__api_get(url=url).json())
 
+    def parseName(self, full_name: str) -> ParseNameResponse:
+        """Infer the likely first/last name structure of a name, ex. John Smith or SMITH, John or SMITH; John.
+
+        Args:
+            full_name (str): The name to be parsed
+
+        Returns: 
+        ParseNameResponse: An object which is a wrapper of the API's response object for this particular endpoint.
+        """
+
+        url = f"parseName/{full_name}"
+        return ParseNameResponse(self.__api_get(url=url).json())
+
     def parseNameGeo(self, full_name: str, country_code: CountryCodes) -> ParseNameResponse:
         """Infer the likely first/last name structure of a name, ex. John Smith or SMITH, John or SMITH; John, given an ISO2 country of residence.
 
@@ -182,12 +195,12 @@ class NamsorClient:
         url = f"parseName/{full_name}/{country_code.value}"
         return ParseNameResponse(self.__api_get(url=url).json())
 
-    def origin(self, first_name: str, last_name) -> OriginResponse:
+    def origin(self, first_name: str, last_name: str) -> OriginResponse:
         """Infer the likely country of origin of a personal name. Assumes names as they are in the country of origin. For US, CA, AU, NZ and other melting-pots : use 'diaspora' instead.
 
         Args:
             first_name (str): The desired first name.
-            last_name ([type]): The desired last name
+            last_name (str): The desired last name
 
         Returns:
             OriginResponse: An object which is a wrapper of the API's response object for this particular endpoint.
@@ -208,16 +221,3 @@ class NamsorClient:
 
         url = f"country/{first_name}/{last_name}"
         return OriginResponse(self.__api_get(url=url).json())
-
-    def parseName(self, full_name: str) -> ParseNameResponse:
-        """Infer the likely first/last name structure of a name, ex. John Smith or SMITH, John or SMITH; John.
-
-        Args:
-            full_name (str): The name to be parsed
-
-        Returns: 
-        ParseNameResponse: An object which is a wrapper of the API's response object for this particular endpoint.
-        """
-
-        url = f"parseName/{full_name}"
-        return ParseNameResponse(self.__api_get(url=url).json())

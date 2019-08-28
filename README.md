@@ -1,4 +1,85 @@
-*namsor-client* is a python package that serves as a wrapper for the Namsor classification API.
+## *namsor-client* is a python package that serves as a wrapper for the Namsor classification API.
+
+## API
+
+- **gender(first_name: str, last_name: str)**
+*Infer the likely gender of a name.*
+
+    - ```first_name: The desired first name. ```
+    - ```last_name: The desired last name. ```
+    - ```Returns: GenderResponse ```
+  
+- **genderGeo(first_name: str, last_name: str, country_code: CountryCodes)**
+*Infer the likely gender of a name, given a local context (ISO2country code).*
+
+    - ```first_name: The desired first name.```
+    - ```last_name: The desired last name.```
+    - ```country_code: The country code, to be passed using the CountryCodes object.```
+    - ```Returns: GenderResponse```
+
+- **genderFullGeo(full_name: str, country_code: CountryCodes)**
+*Infer the likely gender of a full name, given a local context (ISO2 country code).*
+
+    - ```full_name: The name to be classified.```
+    - ```country_code: The country code to aid with classification.```
+    - ```Returns: GenderResponse```
+
+- **genderFull(full_name: str)**
+*Infer the likely gender of a full name, ex. John H. Smith*
+
+    - ```full_name: The name to be classified.```
+    - ```Returns: GenderResponse```
+
+- **usRaceEthnicity(first_name: str, last_name: str)**
+*Infer a US resident's likely race/ethnicity according to US Census taxonomy W_N(white, non latino), HL (hispano latino),  A (asian, non latino), B_NL (black, non latino).*
+
+    - ```first_name: The desired first name.```
+    - ```last_name: The desired last name.```
+    - ```Returns: OriginResponse```
+        
+- **usRaceEthnicityZIP5(first_name: str, last_name: str, zip5_code: str)**
+*Infer a US resident's likely race/ethnicity according to US Census taxonomy, usingZIP5code info. Output is W_NL (white, non latino), HL (hispano latino),  A (asian,non latino, B_NL (black, non latino).*
+
+    - ```first_name: The desired first name```
+    - ```last_name: The desired last name```
+    - ```zip5_code: The zip code to aid with classification```
+    - ```Returns: OriginResponse```
+    
+
+- **diaspora(country_code: CountryCodes, first_name: str, last_name: str)**
+*Infer the likely ethnicity/diaspora of a personal name, given a country of residence ISO2 code*
+
+    - ```first_name (str): The desired first name. ```
+    - ```last_name (str): The desired last name. ```
+    - ```coutry_code (CountryCodes): The country code to aid with parsing. ```
+    - ```Returns: DiasporaResponse ```
+
+- **parseName(full_name: str)**
+*Infer the likely first/last name structure of a name, ex. John Smith or SMITH, John or SMITH; John, given an ISO2 country of residence.*
+
+    - ```full_name (str): The full name to be parsed. ```
+    - ```Returns: ParseNameResponse ```
+
+- **parseNameGeo(full_name: str, country_code: CountryCodes)**
+*Infer the likely first/last name structure of a name, ex. John Smith or SMITH, John or SMITH; John, given an ISO2 country of residence.*
+
+    - ```full_name (str): The full name to be parsed. ```
+    - ```coutry_code (CountryCodes): The country code to aid with parsing. ```
+    - ```Returns: ParseNameResponse ```
+
+- **origin(first_name: str, last_name: str)**
+*Infer the likely country of origin of a personal name. Assumes names as they are in the country of origin. For US, CA, AU, NZ and other melting-pots : use 'diaspora' instead.*
+
+    - ```first_name : The desired first name. ```
+    - ```last_name : The desired last name. ```
+    - ```Returns: OriginResponse ```
+
+- **country(full_name: str)**
+*Infer the likely country of residence of a personal full name, or one surname. Assumesnames as they are in the country of residence OR the country of origin.*
+
+    - ```full_name : The name whose country of residence should be determined. ```
+    - ```Returns: OriginResponse ```
+
 
 
 ## Responses
@@ -69,6 +150,9 @@
 - ```ParseNameBatch``` *returns ParsedNameResponse*
 - ```ParseNameGeoBatch``` *returns ParsedNameResponse*
 
+##Country Codes
+Whenever a country code needs to be passed to any function, the CountryCodes class should be used. It exposes an enum with all recognized country codes of the world marked by the respective country's name.
+
 ## Installation
 
 ```pip install namsor-client```
@@ -96,38 +180,6 @@ print(response.score)
 print(response.probability_calibrated)
 
 # Refer to Responses section to view all different variables of each different Response
-
-
-# Access the genderGeo (GET) endpoint with function that returns a response of type GenderResponse
-response = client.genderGeo("Lelouch","Lamperouge", CountryCodes.Japan)
-
-# Access the genderFullGeo (GET) endpoint with function that returns a response of type GenderResponse
-response = client.genderFullGeo("Lelouch Lamperouge", CountryCodes.Japan)
-
-# Access the genderFull (GET) endpoint with function that returns a response of type GenderResponse
-response = client.genderFull("Lelouch Lamperouge")
-
-# Access the usRaceEthnicity (GET) endpoint with function that returns a response of type RaceEthnicityResponse
-response = client.usRaceEthnicity("Lelouch","Lamperouge")
-
-# Access the usRaceEthnicityZIP5 (GET) endpoint with function that returns a response of type RaceEthnicityResponse
-response = client.usRaceEthnicityZIP5("Lelouch","Lamperouge", "42096")
-
-# Access the diaspora (GET) endpoint with function that returns a response of type DiasporaResponse
-response = client.diaspora(CountryCodes.Japan, "Lelouch",  "Lamperouge")
-
-# Access the parseName (GET) endpoint with function that returns a response of type ParseNameResponse
-response = client.parseName("Lelouch Lamperouge")
-
-# Access the parseNameGeo (GET) endpoint with function that returns a response of type ParseNameResponse
-response = client.parseNameGeo("Lelouch Lamperouge", CountryCodes.Japan)
-
-# Access the origin (GET) endpoint with function that returns a response of type OriginResponse
-response = client.origin("Lelouch","Lamperouge")
-
-# Access the country (GET) endpoint with function that returns a response of type CountryResponse
-response = client.country("Lelouch Lamperouge")
-
 
 
 # Access the genderBatch (POST) endpoint
