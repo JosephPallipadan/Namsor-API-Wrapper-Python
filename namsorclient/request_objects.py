@@ -9,6 +9,7 @@ class BatchItem(ABC):
     """
     pass
 
+
 class Batch(ABC):
     """ An abstract class representing a general batch in which items can be added
     """
@@ -19,13 +20,13 @@ class Batch(ABC):
     @abstractmethod
     def addItem(self, item: BatchItem):
         """ An abstract method that appends an item of type BatchItem (any subclass of BatchItem) to items, a list
-        
+
         Args:
             item (BatchItem): the item of type BatchItem (any subclass of BatchItem) which is to be 
             appended to items, a list
         """
-        self.items.append(item)   
- 
+        self.items.append(item)
+
 
 class GenderBatch(Batch):
     """
@@ -40,15 +41,16 @@ class GenderBatch(Batch):
     class GenderBatchItem(BatchItem):
         """ 
             A class representing an item of a GenderBatch object that contains necessary data which is inputted by the user
-        
+
             Attributes:
                ID (str): The ID of the item
                first_name (str): The desired first name
                last_name (str): The desired last name
         """
-        def __init__(self, first_name: str, last_name: str, ID = "unassigned"):
+
+        def __init__(self, first_name: str, last_name: str, ID="unassigned"):
             """ Constructor
-            
+
             Args:
                 first_name (str): The desired first name
                 last_name (str): The desired last name
@@ -56,7 +58,7 @@ class GenderBatch(Batch):
             """
             self.ID = ID
             self.first_name = first_name
-            self.last_name = last_name     
+            self.last_name = last_name
 
     url = "genderBatch"
     items = []
@@ -68,9 +70,9 @@ class GenderBatch(Batch):
         self.items = []
         self.response_type = GenderResponse
 
-    def addItem(self, first_name: str, last_name: str, ID = "unassigned"):
+    def addItem(self, first_name: str, last_name: str, ID="unassigned"):
         """ Adds a GenderBatchItem, with the required input, to the batch
-        
+
         Args:
             first_name (str): The desired first name
             last_name (str): The desired last name
@@ -80,19 +82,20 @@ class GenderBatch(Batch):
 
     def batch_item_converter(self) -> list:
         """ Converts all the batch's items' data into a list of dictionaries
-        
+
         Returns:
             list: a list of dictionaries each containing each batch item's data
         """
         items_list = []
         for item in self.items:
             items_list.append({
-                "id":item.ID,
-                "firstName":item.first_name,
-                "lastName":item.last_name,
+                "id": item.ID,
+                "firstName": item.first_name,
+                "lastName": item.last_name,
             })
-        
+
         return items_list
+
 
 class GenderGeoBatch(Batch):
     """
@@ -107,7 +110,7 @@ class GenderGeoBatch(Batch):
     class GenderGeoBatchItem(BatchItem):
         """ 
             A class representing an item of a GenderGeoBatch object that contains necessary data which is inputted by the user
-        
+
             Attributes:
                ID (str): The ID of the item
                first_name (str): The desired first name
@@ -115,9 +118,10 @@ class GenderGeoBatch(Batch):
                country_code (CountryCodes): The desired country code
 
         """
-        def __init__(self, first_name: str, last_name: str, country_code: CountryCodes, ID ="unassigned"):
+
+        def __init__(self, first_name: str, last_name: str, country_code: CountryCodes, ID="unassigned"):
             """Constructor
-            
+
             Args:
                 first_name (str): The desired first name
                 last_name (str): The desired last name
@@ -127,7 +131,7 @@ class GenderGeoBatch(Batch):
             """
             self.ID = ID
             self.first_name = first_name
-            self.last_name = last_name 
+            self.last_name = last_name
             self.country_code = country_code.value
 
     url = "genderGeoBatch"
@@ -140,9 +144,9 @@ class GenderGeoBatch(Batch):
         self.items = []
         self.response_type = GenderResponse
 
-    def addItem(self, first_name: str, last_name: str, country_code: CountryCodes, ID ="unassigned"):
+    def addItem(self, first_name: str, last_name: str, country_code: CountryCodes, ID="unassigned"):
         """ Adds a GenderGeoBatchItem, with the required input, to the batch
-        
+
         Args:
             first_name (str): The desired first name
             last_name (str): The desired last name
@@ -152,24 +156,22 @@ class GenderGeoBatch(Batch):
         """
         super().addItem(self.GenderGeoBatchItem(first_name, last_name, country_code, ID))
 
-
     def batch_item_converter(self) -> list:
         """ Converts all the batch's items' data into a list of dictionaries
-        
+
         Returns:
             list: a list of dictionaries each containing each batch item's data
         """
         items_list = []
         for item in self.items:
             items_list.append({
-                "id":item.ID,
-                "firstName":item.first_name,
-                "lastName":item.last_name,
+                "id": item.ID,
+                "firstName": item.first_name,
+                "lastName": item.last_name,
                 "countryIso2": item.country_code
             })
-        
+
         return items_list
- 
 
 
 class ParsedGenderBatch(Batch):
@@ -185,7 +187,7 @@ class ParsedGenderBatch(Batch):
     class ParsedGenderBatchItem(BatchItem):
         """ 
             A class representing an item of a ParsedGenderBatch object that contains necessary data which is inputted by the user
-        
+
             Attributes:
                ID (str): The ID of the item
                first_name (str): The desired first name
@@ -194,14 +196,14 @@ class ParsedGenderBatch(Batch):
                suffix (str): The desired suffix
                middle_name (str): The desired middle name
         """
-        def __init__(self, first_name: str, last_name: str, prefix_or_title: str, suffix: str, middle_name: str, ID = "unassigned"):
+
+        def __init__(self, first_name: str, last_name: str, prefix_or_title: str, suffix: str, middle_name: str, ID="unassigned"):
             self.ID = ID
             self.first_name = first_name
-            self.last_name = last_name 
+            self.last_name = last_name
             self.prefix_or_title = prefix_or_title
             self.suffix = suffix
-            self.middle_name = middle_name 
-
+            self.middle_name = middle_name
 
     url = "parsedGenderBatch"
     items = []
@@ -212,10 +214,10 @@ class ParsedGenderBatch(Batch):
         """
         self.items = []
         self.response_type = GenderResponse
-    
-    def addItem(self, first_name: str, last_name: str, prefix_or_title: str, suffix: str, middle_name: str, ID = "unassigned"):
+
+    def addItem(self, first_name: str, last_name: str, prefix_or_title: str, suffix: str, middle_name: str, ID="unassigned"):
         """ Adds a ParsedGenderBatchItem, with the required input, to the batch
-        
+
         Args:
             first_name (str): The desired first name
             last_name (str): The desired last name
@@ -224,27 +226,27 @@ class ParsedGenderBatch(Batch):
             middle_name (str): The desired middle name
             ID (str, optional): The ID of the item. Defaults to "unassigned".
         """
-        super().addItem(self.ParsedGenderBatchItem(first_name, last_name, prefix_or_title, suffix, middle_name, ID))
+        super().addItem(self.ParsedGenderBatchItem(first_name,
+                                                   last_name, prefix_or_title, suffix, middle_name, ID))
 
-    def batch_item_converter(self)->list:
+    def batch_item_converter(self) -> list:
         """ Converts all the batch's items' data into a list of dictionaries
-        
+
         Returns:
             list: a list of dictionaries each containing each batch item's data
         """
         items_list = []
         for item in self.items:
             items_list.append({
-                "id":item.ID,
-                "firstName":item.first_name,
-                "lastName":item.last_name,
-                "prefixOrTitle":item.prefix_or_title,
-                "suffix":item.suffix,
-                "middleName":item.middle_name,
+                "id": item.ID,
+                "firstName": item.first_name,
+                "lastName": item.last_name,
+                "prefixOrTitle": item.prefix_or_title,
+                "suffix": item.suffix,
+                "middleName": item.middle_name,
             })
-        
+
         return items_list
-        
 
 
 class ParsedGenderGeoBatch(Batch):
@@ -260,7 +262,7 @@ class ParsedGenderGeoBatch(Batch):
     class ParsedGenderGeoBatchItem(BatchItem):
         """ 
             A class representing an item of a ParsedGenderGeoBatch object that contains necessary data which is inputted by the user
-        
+
             Attributes:
                ID (str): The ID of the item
                first_name (str): The desired first name
@@ -270,9 +272,10 @@ class ParsedGenderGeoBatch(Batch):
                middle_name (str): The desired middle name
                country_code (CountryCodes): The desired country code
         """
-        def __init__(self, first_name: str, last_name: str, prefix_or_title: str, suffix: str, middle_name: str, country_code: CountryCodes, ID = "unassigned"):
+
+        def __init__(self, first_name: str, last_name: str, prefix_or_title: str, suffix: str, middle_name: str, country_code: CountryCodes, ID="unassigned"):
             """Constructor
-            
+
             Args:
                 first_name (str): The desired first name
                 last_name (str): The desired last name
@@ -284,10 +287,10 @@ class ParsedGenderGeoBatch(Batch):
             """
             self.ID = ID
             self.first_name = first_name
-            self.last_name = last_name 
+            self.last_name = last_name
             self.prefix_or_title = prefix_or_title
             self.suffix = suffix
-            self.middle_name = middle_name 
+            self.middle_name = middle_name
             self.country_code = country_code.value
 
     url = "parsedGenderGeoBatch"
@@ -300,9 +303,9 @@ class ParsedGenderGeoBatch(Batch):
         self.items = []
         self.response_type = GenderResponse
 
-    def addItem(self, first_name: str, last_name: str, prefix_or_title: str, suffix: str, middle_name: str, country_code: CountryCodes, ID = "unassigned"):
+    def addItem(self, first_name: str, last_name: str, prefix_or_title: str, suffix: str, middle_name: str, country_code: CountryCodes, ID="unassigned"):
         """ Adds a ParsedGenderGeoBatchItem, with the required input, to the batch
-        
+
         Args:
             first_name (str): The desired first name
             last_name (str): The desired last name
@@ -312,28 +315,28 @@ class ParsedGenderGeoBatch(Batch):
             country_code (CountryCodes): The desired country code
             ID (str, optional): The ID of the time. Defaults to "unassigned".
         """
-        super().addItem(self.ParsedGenderGeoBatchItem(first_name, last_name, prefix_or_title, suffix, middle_name, country_code, ID))
+        super().addItem(self.ParsedGenderGeoBatchItem(first_name, last_name,
+                                                      prefix_or_title, suffix, middle_name, country_code, ID))
 
-    def batch_item_converter(self)->list:
+    def batch_item_converter(self) -> list:
         """ Converts all the batch's items' data into a list of dictionaries
-        
+
         Returns:
             list: a list of dictionaries each containing each batch item's data
         """
         items_list = []
         for item in self.items:
             items_list.append({
-                "id":item.ID,
-                "firstName":item.first_name,
-                "lastName":item.last_name,
-                "prefixOrTitle":item.prefix_or_title,
-                "suffix":item.suffix,
-                "middleName":item.middle_name,
+                "id": item.ID,
+                "firstName": item.first_name,
+                "lastName": item.last_name,
+                "prefixOrTitle": item.prefix_or_title,
+                "suffix": item.suffix,
+                "middleName": item.middle_name,
                 "countryIso2": item.country_code
             })
-        
-        return items_list
 
+        return items_list
 
 
 class GenderFullBatch(Batch):
@@ -349,14 +352,15 @@ class GenderFullBatch(Batch):
     class GenderFullBatchItem(BatchItem):
         """ 
             A class representing an item of a GenderFullBatch object that contains necessary data which is inputted by the user
-        
+
             Attributes:
                ID (str): The ID of the item
                name (str): The desired name.
         """
-        def __init__(self, name: str, ID = "unassigned"):
+
+        def __init__(self, name: str, ID="unassigned"):
             """Constructor
-            
+
             Args:
                 name (str): The desired name.
                 ID (str, optional): The ID of the time. Defaults to "unassigned".
@@ -374,31 +378,31 @@ class GenderFullBatch(Batch):
         self.items = []
         self.response_type = GenderResponse
 
-    def addItem(self, name: str, ID = "unassigned"):
+    def addItem(self, name: str, ID="unassigned"):
         """ Adds a GenderFullBatchItem, with the required input, to the batch
-        
+
         Args:
             name (str): The desired name.
             ID (str, optional): The ID of the time. Defaults to "unassigned".
         """
-        super().addItem(self.GenderFullBatchItem(name,ID))
+        super().addItem(self.GenderFullBatchItem(name, ID))
 
-    def batch_item_converter(self)->list:
+    def batch_item_converter(self) -> list:
         """ Converts all the batch's items' data into a list of dictionaries
-        
+
         Returns:
             list: a list of dictionaries each containing each batch item's data
         """
         items_list = []
         for item in self.items:
             items_list.append({
-                "id":item.ID,
-                "name":item.name,
+                "id": item.ID,
+                "name": item.name,
             })
-        
+
         return items_list
 
-    
+
 class GenderFullGeoBatch(Batch):
     """
         A class representing a batch of items whose data is used to infer the likely gender of multiple full names, with a given cultural context (country ISO2 code).
@@ -412,15 +416,16 @@ class GenderFullGeoBatch(Batch):
     class GenderFullGeoBatchItem(BatchItem):
         """ 
             A class representing an item of a GenderFullGeoBatch object that contains necessary data which is inputted by the user
-        
+
             Attributes:
                ID (str): The ID of the item
                name (str): The desired name.
                country_code (CountryCodes): The desired country code
         """
-        def __init__(self, name: str,  country_code: CountryCodes,  ID = "unassigned"):
+
+        def __init__(self, name: str,  country_code: CountryCodes,  ID="unassigned"):
             """ Constructor
-        
+
             Args:
                 name (str): The desired name.
                 country_code (CountryCodes): The desired country code
@@ -429,7 +434,7 @@ class GenderFullGeoBatch(Batch):
             self.ID = ID
             self.name = name
             self.country_code = country_code.value
-    
+
     url = "genderFullGeoBatch"
     items = []
     response_type = None
@@ -440,33 +445,31 @@ class GenderFullGeoBatch(Batch):
         self.items = []
         self.response_type = GenderResponse
 
-    def addItem(self, name: str,  country_code: CountryCodes,  ID = "unassigned"):
+    def addItem(self, name: str,  country_code: CountryCodes,  ID="unassigned"):
         """ Adds a GenderFullGeoBatchItem, with the required input, to the batch
-        
+
         Args:
             name (str): The desired name.
             country_code (CountryCodes): The desired country code
             ID (str, optional): The ID of the time. Defaults to "unassigned".
         """
-        super().addItem(self.GenderFullGeoBatchItem(name,country_code,ID))
+        super().addItem(self.GenderFullGeoBatchItem(name, country_code, ID))
 
-    def batch_item_converter(self)->list:
+    def batch_item_converter(self) -> list:
         """ Converts all the batch's items' data into a list of dictionaries
-        
+
         Returns:
             list: a list of dictionaries each containing each batch item's data
         """
         items_list = []
         for item in self.items:
             items_list.append({
-                "id":item.ID,
-                "name":item.name,
-                "countryIso2":item.country_code,
+                "id": item.ID,
+                "name": item.name,
+                "countryIso2": item.country_code,
             })
-        
+
         return items_list
-
-
 
 
 class OriginBatch(Batch):
@@ -482,15 +485,16 @@ class OriginBatch(Batch):
     class OriginBatchItem(BatchItem):
         """ 
             A class representing an item of an OriginBatchItem object that contains necessary data which is inputted by the user
-        
+
             Attributes:
                ID (str): The ID of the item
                first_name (str): The desired first name
                last_name (str): The desired last name
         """
-        def __init__(self, first_name: str, last_name: str,  ID = "unassigned"):
+
+        def __init__(self, first_name: str, last_name: str,  ID="unassigned"):
             """Constructor
-            
+
             Args:
                 first_name (str): The desired first name
                 last_name (str): The desired last name
@@ -499,7 +503,6 @@ class OriginBatch(Batch):
             self.ID = ID
             self.first_name = first_name
             self.last_name = last_name
-
 
     url = "originBatch"
     items = []
@@ -510,33 +513,33 @@ class OriginBatch(Batch):
         """
         self.items = []
         self.response_type = OriginResponse
-    
-    def addItem(self, first_name: str, last_name: str,  ID = "unassigned"):
+
+    def addItem(self, first_name: str, last_name: str,  ID="unassigned"):
         """ Adds a OriginBatchItem, with the required input, to the batch
-        
+
         Args:
             first_name (str): The desired first name
             last_name (str): The desired last name
             ID (str, optional): The ID of the item. Defaults to "unassigned".
         """
-        super().addItem(self.OriginBatchItem(first_name,last_name,ID))
+        super().addItem(self.OriginBatchItem(first_name, last_name, ID))
 
-    
-    def batch_item_converter(self)->list:
+    def batch_item_converter(self) -> list:
         """ Converts all the batch's items' data into a list of dictionaries
-        
+
         Returns:
             list: a list of dictionaries each containing each batch item's data
         """
         items_list = []
         for item in self.items:
             items_list.append({
-                "id":item.ID,
-                "firstName":item.first_name,
-                "lastName":item.last_name,
+                "id": item.ID,
+                "firstName": item.first_name,
+                "lastName": item.last_name,
             })
-        
+
         return items_list
+
 
 class CountryBatch(Batch):
     """
@@ -551,22 +554,22 @@ class CountryBatch(Batch):
     class CountryBatchItem(BatchItem):
         """ 
             A class representing an item of an OriginBatchItem object that contains necessary data which is inputted by the user
-        
+
             Attributes:
                ID (str): The ID of the item
                first_name (str): The desired first name
                last_name (str): The desired last name
         """
-        def __init__(self, name: str,  ID = "unassigned"):
+
+        def __init__(self, name: str,  ID="unassigned"):
             """Constructor
-            
+
             Args:
                 name (str): The desired name
                 ID (str, optional): The ID of the item. Defaults to "unassigned".
             """
             self.ID = ID
             self.name = name
-
 
     url = "countryBatch"
     items = []
@@ -577,31 +580,31 @@ class CountryBatch(Batch):
         """
         self.items = []
         self.response_type = CountryResponse
-    
-    def addItem(self, name: str,  ID = "unassigned"):
+
+    def addItem(self, name: str,  ID="unassigned"):
         """ Adds a CountryBatchItem, with the required input, to the batch 
-        
+
         Args:
             name (str): The desired name
             ID (str, optional): The ID of the item. Defaults to "unassigned".
         """
         super().addItem(self.CountryBatchItem(name, ID))
 
-    
-    def batch_item_converter(self)->list:
+    def batch_item_converter(self) -> list:
         """ Converts all the batch's items' data into a list of dictionaries
-        
+
         Returns:
             list: a list of dictionaries each containing each batch item's data
         """
         items_list = []
         for item in self.items:
             items_list.append({
-                "id":item.ID,
-                "name":item.name,
+                "id": item.ID,
+                "name": item.name,
             })
-        
+
         return items_list
+
 
 class US_RaceEthnicityBatch(Batch):
     """
@@ -616,16 +619,17 @@ class US_RaceEthnicityBatch(Batch):
     class US_RaceEthnicityBatchItem(BatchItem):
         """ 
             A class representing an item of a US_RaceEthnicityBatch object that contains necessary data which is inputted by the user
-        
+
             Attributes:
                ID (str): The ID of the item
                first_name (str): The desired first name
                last_name (str): The desired last name
                country_code (CountryCodes): The desired country code
         """
-        def __init__(self, first_name: str, last_name: str,  country_code: CountryCodes,   ID = "unassigned"):
+
+        def __init__(self, first_name: str, last_name: str,  country_code: CountryCodes,   ID="unassigned"):
             """Constructor
-            
+
             Args:
                 first_name (str): The desired first name
                 last_name (str): The desired last name
@@ -637,7 +641,6 @@ class US_RaceEthnicityBatch(Batch):
             self.last_name = last_name
             self.country_code = country_code.value
 
-
     url = "usRaceEthnicityBatch"
     items = []
     response_type = None
@@ -647,36 +650,35 @@ class US_RaceEthnicityBatch(Batch):
         """
         self.items = []
         self.response_type = RaceEthnicityResponse
-    
 
-    
-    def addItem(self, first_name: str, last_name: str,  country_code: CountryCodes,   ID = "unassigned"):
+    def addItem(self, first_name: str, last_name: str,  country_code: CountryCodes,   ID="unassigned"):
         """ Adds a US_RaceEthnicityBatchItem, with the required input, to the batch 
-        
+
         Args:
             first_name (str): The desired first name
             last_name (str): The desired last name
             country_code (CountryCodes): The desired country code
             ID (str, optional): [description]. Defaults to "unassigned".
         """
-        super().addItem(self.US_RaceEthnicityBatchItem(first_name,last_name,country_code,ID))
+        super().addItem(self.US_RaceEthnicityBatchItem(
+            first_name, last_name, country_code, ID))
 
-    
-    def batch_item_converter(self)->list:
+    def batch_item_converter(self) -> list:
         """ Converts all the batch's items' data into a list of dictionaries
-        
+
         Returns:
             list: a list of dictionaries each containing each batch item's data
         """
         items_list = []
         for item in self.items:
             items_list.append({
-            "id":item.ID,
-            "firstName":item.first_name,
-            "lastName":item.last_name,
-            "countryIso2":item.country_code,})
-        
+                "id": item.ID,
+                "firstName": item.first_name,
+                "lastName": item.last_name,
+                "countryIso2": item.country_code, })
+
         return items_list
+
 
 class US_ZipRaceEthnicityBatch(Batch):
     """
@@ -691,7 +693,7 @@ class US_ZipRaceEthnicityBatch(Batch):
     class US_ZipRaceEthnicityBatchItem(BatchItem):
         """ 
             A class representing an item of a US_ZipRaceEthnicityBatch object that contains necessary data which is inputted by the user
-        
+
             Attributes:
                ID (str): The ID of the item
                first_name (str): The desired first name
@@ -699,9 +701,10 @@ class US_ZipRaceEthnicityBatch(Batch):
                country_code (CountryCodes): The desired country code
                zip_code (str): The desired zip code
         """
-        def __init__(self, first_name: str, last_name: str,  country_code: CountryCodes, zip_code:str,  ID = "unassigned"):
+
+        def __init__(self, first_name: str, last_name: str,  country_code: CountryCodes, zip_code: str,  ID="unassigned"):
             """Constructor
-            
+
             Args:
                 first_name (str): The desired first name
                 last_name (str): The desired last name
@@ -715,7 +718,6 @@ class US_ZipRaceEthnicityBatch(Batch):
             self.country_code = country_code.value
             self.zip_code = zip_code
 
-
     url = "usZipRaceEthnicityBatch"
     items = []
     response_type = None
@@ -725,12 +727,10 @@ class US_ZipRaceEthnicityBatch(Batch):
         """
         self.items = []
         self.response_type = RaceEthnicityResponse
-    
 
-    
-    def addItem(self, first_name: str, last_name: str,  country_code: CountryCodes, zip_code: str, ID = "unassigned"):
+    def addItem(self, first_name: str, last_name: str,  country_code: CountryCodes, zip_code: str, ID="unassigned"):
         """ Adds a CountryBatchItem, with the required input, to the batch 
-        
+
         Args:
             first_name (str): The desired first name
             last_name (str): The desired last name
@@ -738,24 +738,24 @@ class US_ZipRaceEthnicityBatch(Batch):
             zip_code (str): The desired zip code
             ID (str, optional): The ID of the item. Defaults to "unassigned".
         """
-        super().addItem(self.US_ZipRaceEthnicityBatchItem(first_name,last_name,country_code,zip_code,ID))
+        super().addItem(self.US_ZipRaceEthnicityBatchItem(
+            first_name, last_name, country_code, zip_code, ID))
 
-    
-    def batch_item_converter(self)->list:
+    def batch_item_converter(self) -> list:
         """ Converts all the batch's items' data into a list of dictionaries
-        
+
         Returns:
             list: a list of dictionaries each containing each batch item's data
         """
         items_list = []
         for item in self.items:
             items_list.append({
-            "id":item.ID,
-            "firstName":item.first_name,
-            "lastName":item.last_name,
-            "countryIso2":item.country_code,
-            "zipCode":item.zip_code,})
-        
+                "id": item.ID,
+                "firstName": item.first_name,
+                "lastName": item.last_name,
+                "countryIso2": item.country_code,
+                "zipCode": item.zip_code, })
+
         return items_list
 
 
@@ -772,26 +772,27 @@ class DiasporaBatch(Batch):
     class DiasporaBatchItem(BatchItem):
         """ 
             A class representing an item of a DiasporaBatch object that contains necessary data which is inputted by the user
-        
+
             Attributes:
                ID (str): The ID of the item
                first_name (str): The desired first name
                last_name (str): The desired last name
                country_code (CountryCodes): The desired country code
         """
-        def __init__(self, first_name: str, last_name: str,  country_code: CountryCodes,   ID = "unassigned"):
-           """Constructor
-           
-           Args:
-               first_name (str): The desired first name
-               last_name (str): The desired last name
-               country_code (CountryCodes): The desired country code
-               ID (str, optional): The ID of the item. Defaults to "unassigned".
-           """ 
-           self.ID = ID
-           self.first_name = first_name
-           self.last_name = last_name
-           self.country_code = country_code.value
+
+        def __init__(self, first_name: str, last_name: str,  country_code: CountryCodes,   ID="unassigned"):
+            """Constructor
+
+            Args:
+                first_name (str): The desired first name
+                last_name (str): The desired last name
+                country_code (CountryCodes): The desired country code
+                ID (str, optional): The ID of the item. Defaults to "unassigned".
+            """
+            self.ID = ID
+            self.first_name = first_name
+            self.last_name = last_name
+            self.country_code = country_code.value
 
     url = "diasporaBatch"
     items = []
@@ -802,35 +803,35 @@ class DiasporaBatch(Batch):
         """
         self.items = []
         self.response_type = DiasporaResponse
-    
-    def addItem(self, first_name: str, last_name: str,  country_code: CountryCodes,   ID = "unassigned"):
+
+    def addItem(self, first_name: str, last_name: str,  country_code: CountryCodes,   ID="unassigned"):
         """ Adds a DiasporaBatchItem, with the required input, to the batch 
-        
+
         Args:
             first_name (str): The desired first name
             last_name (str): The desired last name
             country_code (CountryCodes): The desired country code
             ID (str, optional): The ID of the item. Defaults to "unassigned".
         """
-        super().addItem(self.DiasporaBatchItem(first_name,last_name,country_code,ID))
+        super().addItem(self.DiasporaBatchItem(first_name, last_name, country_code, ID))
 
-    
-    def batch_item_converter(self)->list:
+    def batch_item_converter(self) -> list:
         """ Converts all the batch's items' data into a list of dictionaries
-        
+
         Returns:
             list: a list of dictionaries each containing each batch item's data
         """
         items_list = []
         for item in self.items:
             items_list.append({
-            "id":item.ID,
-            "firstName":item.first_name,
-            "lastName":item.last_name,
-            "countryIso2":item.country_code,})
-        
+                "id": item.ID,
+                "firstName": item.first_name,
+                "lastName": item.last_name,
+                "countryIso2": item.country_code, })
+
         return items_list
-    
+
+
 class ParseNameBatch(Batch):
     """
         A class representing a batch of items whose data is used to infer the likely first/last name structure of a name, ex. John Smith or SMITH, John or SMITH; John.
@@ -844,21 +845,21 @@ class ParseNameBatch(Batch):
     class ParseNameBatchItem(BatchItem):
         """ 
             A class representing an item of a ParseNameBatch object that contains necessary data which is inputted by the user
-        
+
             Attributes:
                ID (str): The ID of the item
                name (str): The desired name
         """
-        def __init__(self, name: str,  ID = "unassigned"):
+
+        def __init__(self, name: str,  ID="unassigned"):
             """Constructor
-            
+
             Args:
                 name (str): The desired name
                 ID (str, optional): The ID of the item. Defaults to "unassigned".
             """
             self.ID = ID
             self.name = name
-
 
     url = "parseNameBatch"
     items = []
@@ -869,31 +870,31 @@ class ParseNameBatch(Batch):
         """
         self.items = []
         self.response_type = ParseNameResponse
-    
-    def addItem(self, name: str,  ID = "unassigned"):
+
+    def addItem(self, name: str,  ID="unassigned"):
         """ Adds a ParseNameBatchItem, with the required input, to the batch 
-        
+
         Args:
             name (str): The desired name
             ID (str, optional): The ID of the item. Defaults to "unassigned".
         """
         super().addItem(self.ParseNameBatchItem(name, ID))
 
-    
-    def batch_item_converter(self)->list:
+    def batch_item_converter(self) -> list:
         """ Converts all the batch's items' data into a list of dictionaries
-        
+
         Returns:
             list: a list of dictionaries each containing each batch item's data
         """
         items_list = []
         for item in self.items:
             items_list.append({
-                "id":item.ID,
-                "name":item.name,
+                "id": item.ID,
+                "name": item.name,
             })
-        
+
         return items_list
+
 
 class ParseNameGeoBatch(Batch):
     """
@@ -908,15 +909,16 @@ class ParseNameGeoBatch(Batch):
     class ParseNameGeoBatchItem(BatchItem):
         """ 
             A class representing an item of a ParseNameGeoBatch object that contains necessary data which is inputted by the user
-        
+
             Attributes:
                ID (str): The ID of the item
                name (str): The desired name
                country_code (CountryCodes): The desired country code
         """
-        def __init__(self, name: str, country_code: CountryCodes, ID = "unassigned"):
+
+        def __init__(self, name: str, country_code: CountryCodes, ID="unassigned"):
             """Constructor
-            
+
             Args:
                 name (str): The desired name
                 country_code (CountryCodes): The desired country code
@@ -925,7 +927,6 @@ class ParseNameGeoBatch(Batch):
             self.ID = ID
             self.name = name
             self.country_code = country_code.value
-
 
     url = "parseNameBatch"
     items = []
@@ -936,10 +937,10 @@ class ParseNameGeoBatch(Batch):
         """
         self.items = []
         self.response_type = ParseNameResponse
-    
-    def addItem(self, name: str, country_code: CountryCodes, ID = "unassigned"):
+
+    def addItem(self, name: str, country_code: CountryCodes, ID="unassigned"):
         """ Adds a ParseNameGeoBatchItem, with the required input, to the batch 
-        
+
         Args:
             name (str): The desired name
             country_code (CountryCodes): The desired country code
@@ -947,30 +948,29 @@ class ParseNameGeoBatch(Batch):
         """
         super().addItem(self.ParseNameGeoBatchItem(name, country_code, ID))
 
-    
-    def batch_item_converter(self)->list:
+    def batch_item_converter(self) -> list:
         """ Converts all the batch's items' data into a list of dictionaries
-        
+
         Returns:
             list: a list of dictionaries each containing each batch item's data
         """
         items_list = []
         for item in self.items:
             items_list.append({
-                "id":item.ID,
-                "name":item.name,
-                "countryIso2":item.country_code,
+                "id": item.ID,
+                "name": item.name,
+                "countryIso2": item.country_code,
             })
-        
+
         return items_list
 
 
 def list_separator(data: list) -> list:
     """ Separates list of dictionaries representing batch items' data into multiple lists each having a maximum of 100 dictionaries
-    
+
     Args:
         data (list): a list of dictionaries each containing each batch item's data
-    
+
     Returns:
         list: a list of lists each having a maximum of 100 dictionaries
     """
