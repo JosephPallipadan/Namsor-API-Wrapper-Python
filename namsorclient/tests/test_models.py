@@ -138,13 +138,14 @@ def test_OriginResponse():
     assert tester.top_region_origin == test["topRegionOrigin"]
     assert tester.sub_region_origin == test["subRegionOrigin"]
 
+
 def test_GenderFullResponse():
     test = {
         "id": "null",
         "name": "Lelouch Lamperouge",
         "likelyGender": "male",
         "genderScale": -1,
-        "score": ,
+        "score": 99,
     }
 
     tester = namsorclient.GenderFullResponse(test)
@@ -153,6 +154,7 @@ def test_GenderFullResponse():
     assert tester.likely_gender == test["likelyGender"]
     assert tester.gender_scale == test["genderScale"]
     assert tester.score == test["score"]
+
 
 def test_GenderResponse():
     test = {

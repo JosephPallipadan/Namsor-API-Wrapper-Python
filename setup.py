@@ -1,4 +1,4 @@
-# python setup.py sdist bdist_wheel
+# python setup.py sdist
 
 import setuptools
 
@@ -7,7 +7,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="namsor-client",
-    version="0.0.7",
+    version="0.0.8",
     author="Joseph Pallipadan",
     author_email="pallipadanjoseph@gmail.com",
     description="A Wrapper for the Namsor Classification API",
