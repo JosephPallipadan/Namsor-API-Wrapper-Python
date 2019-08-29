@@ -138,6 +138,12 @@ print(response_list[2].likely_gender)
   - ```gender_scale```
   - ```score```
   - ```probability_calibrated```
+- **GenderFullResponse**
+  - ```ID```
+  - ```name```
+  - ```likely_gender```
+  - ```gender_scale```
+  - ```score```
 - **OriginResponse**
   - ```ID```
   - ```first_name```
@@ -189,8 +195,8 @@ The wrapper also exposes batch functions for each of the different classificatio
 - ```GenderGeoBatch``` *returns GenderResponse*
 - ```ParsedGenderBatch``` *returns GenderResponse*
 - ```ParsedGenderGeoBatch``` *returns GenderResponse*
-- ```GenderFullBatch``` *returns GenderResponse*
-- ```GenderFullGeoBatch``` *returns GenderResponse*
+- ```GenderFullBatch``` *returns GenderFullResponse*
+- ```GenderFullGeoBatch``` *returns GenderFullResponse*
 - ```OriginBatch``` *returns OriginResponse*
 - ```CountryBatch``` *returns CountryBatch*
 - ```US_RaceEthnicityBatch``` *returns RaceEthnicityBatch*

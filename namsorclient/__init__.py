@@ -221,3 +221,15 @@ class NamsorClient:
 
         url = f"country/{first_name}/{last_name}"
         return OriginResponse(self.__api_get(url=url).json())
+
+
+client = NamsorClient("eaff2a8f0bd80d065c431b8a60dc69a9")
+
+bas = GenderFullBatch()
+
+bas.addItem("Arman","Samma")
+bas.addItem("Joseph Pallipadan")
+
+a = client.batch(bas)
+
+print(a[1].ID)

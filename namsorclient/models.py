@@ -41,6 +41,37 @@ class GenderResponse:
         # Initializing the GenderResponse attributes with values of corresponding attribute names or keys of the API responsein json format
 
 
+class GenderFullResponse:
+    """
+        A class that acts as a wrapper for all responses of POST requests which classify a full name into a gender.
+
+        Attributes:
+            ID (str): The ID of the request
+            name (str): The name that was classified
+            likely_gender (str): The likely gender inferred from input (male or female)
+            gender_scale (int): The gender scale inferred from input (-1 or 1)
+            score (float): The score of the precision of the gender information provided ranging from 0 to 50
+    """
+
+    ID = ""
+    name = ""
+    likely_gender = ""
+    gender_scale = ""
+    score = 0.0
+
+    def __init__(self, api_response: dict):
+        """ Constructor
+        Args:
+            api_response (dict): the json format (dict) of the NamsorAPI response received from a GET/POST request
+        """
+
+        self.ID = api_response['id']
+        self.name = api_response['name']
+        self.likely_gender = api_response['likelyGender']
+        self.gender_scale = int(api_response['genderScale'])
+        self.score = float(api_response['score'])
+
+
 class OriginResponse:
     """
         A class that acts as a wrapper for all responses which infer the origin of an individual with a particular name.

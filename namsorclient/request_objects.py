@@ -283,7 +283,7 @@ class ParsedGenderGeoBatch(Batch):
                 suffix (str): The desired suffix
                 middle_name (str): The desired middle name
                 country_code (CountryCodes): The desired country code
-                ID (str, optional): The ID of the time. Defaults to "unassigned".
+                ID (str, optional): The ID of the item. Defaults to "unassigned".
             """
             self.ID = ID
             self.first_name = first_name
@@ -313,7 +313,7 @@ class ParsedGenderGeoBatch(Batch):
             suffix (str): The desired suffix
             middle_name (str): The desired middle name
             country_code (CountryCodes): The desired country code
-            ID (str, optional): The ID of the time. Defaults to "unassigned".
+            ID (str, optional): The ID of the item. Defaults to "unassigned".
         """
         super().addItem(self.ParsedGenderGeoBatchItem(first_name, last_name,
                                                       prefix_or_title, suffix, middle_name, country_code, ID))
@@ -363,7 +363,7 @@ class GenderFullBatch(Batch):
 
             Args:
                 name (str): The desired name.
-                ID (str, optional): The ID of the time. Defaults to "unassigned".
+                ID (str, optional): The ID of the item. Defaults to "unassigned".
             """
             self.ID = ID
             self.name = name
@@ -376,14 +376,14 @@ class GenderFullBatch(Batch):
         """Constructor
         """
         self.items = []
-        self.response_type = GenderResponse
+        self.response_type = GenderFullResponse
 
     def addItem(self, name: str, ID="unassigned"):
         """ Adds a GenderFullBatchItem, with the required input, to the batch
 
         Args:
             name (str): The desired name.
-            ID (str, optional): The ID of the time. Defaults to "unassigned".
+            ID (str, optional): The ID of the item. Defaults to "unassigned".
         """
         super().addItem(self.GenderFullBatchItem(name, ID))
 
@@ -429,7 +429,7 @@ class GenderFullGeoBatch(Batch):
             Args:
                 name (str): The desired name.
                 country_code (CountryCodes): The desired country code
-                ID (str, optional): The ID of the time. Defaults to "unassigned".
+                ID (str, optional): The ID of the item. Defaults to "unassigned".
             """
             self.ID = ID
             self.name = name
@@ -443,7 +443,7 @@ class GenderFullGeoBatch(Batch):
         """Constructor
         """
         self.items = []
-        self.response_type = GenderResponse
+        self.response_type = GenderFullResponse
 
     def addItem(self, name: str,  country_code: CountryCodes,  ID="unassigned"):
         """ Adds a GenderFullGeoBatchItem, with the required input, to the batch
@@ -451,7 +451,7 @@ class GenderFullGeoBatch(Batch):
         Args:
             name (str): The desired name.
             country_code (CountryCodes): The desired country code
-            ID (str, optional): The ID of the time. Defaults to "unassigned".
+            ID (str, optional): The ID of the item. Defaults to "unassigned".
         """
         super().addItem(self.GenderFullGeoBatchItem(name, country_code, ID))
 
@@ -474,7 +474,7 @@ class GenderFullGeoBatch(Batch):
 
 class OriginBatch(Batch):
     """
-        A class representing a batch of items w hose data is used to infer the likely country of origin of multiple names, detecting automatically the cultural context.
+        A class representing a batch of items whose data is used to infer the likely country of origin of multiple names, detecting automatically the cultural context.
 
         Attributes:
             url (str): ending portion of NamsorAPI url to desired section.

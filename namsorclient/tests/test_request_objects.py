@@ -156,7 +156,7 @@ def test_ParsedGenderGeoBatch():
 
 def test_GenderFullBatch():
     tester = namsorclient.GenderFullBatch()
-    assert tester.response_type == namsorclient.GenderResponse
+    assert tester.response_type == namsorclient.GenderFullResponse
     names = []
     for id in range(10):
         name = [faker_obj.name()]
@@ -180,7 +180,7 @@ def test_GenderFullBatch():
 
 def test_GenderFullGeoBatch():
     tester = namsorclient.GenderFullGeoBatch()
-    assert tester.response_type == namsorclient.GenderResponse
+    assert tester.response_type == namsorclient.GenderFullResponse
     names = []
     for id in range(10):
         name = [faker_obj.name()]
