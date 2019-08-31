@@ -1,6 +1,7 @@
 from faker import Faker
 from random import Random
 import xlrd
+import re
 import namsorclient
 from namsorclient.sample_batch_responses import Sample_Responses
 
@@ -28,8 +29,30 @@ def test_list_seperator():
 
 
 def test_export_to_excel():
-    for i in list(Sample_Responses()):
-        print(i)
+    tester = namsorclient.GenderBatch()
+
+    for response_type in Sample_Responses.keys():
+        response = Sample_Responses[str(response_type)]
+        tester.response = response
+        tester.export_to_excel("../hello.xlsx")
+
+        worksheet = xlrd.open_workbook("../hello.xlsx").sheet_by_index(0)
+        response_keys = response[0].keys()
+
+        for response_key, file_key in zip(response_keys, worksheet.row_values(0)):
+            match = re.match(r'([a-z]+)([A-Z]*[a-z]*)([A-Z]*[a-z]*)([A-Z]*[a-z]*)',
+                            response_key).groups()
+            transformed_key = '-'.join([i[0].upper() + i[1:] for i in match if i != ''])
+
+            assert transformed_key == file_key
+        
+        for response_item, row_num in zip(response, range(10)):
+            row_values = worksheet.row_values(row_num+1)
+            response_values = response_item.values()
+
+            for response_value, row_value in zip(response_values, row_values):
+                assert str(response_value) == str(row_value)
+
 
 
 def test_GenderBatch():

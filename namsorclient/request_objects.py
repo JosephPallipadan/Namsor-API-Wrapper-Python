@@ -10,6 +10,7 @@ import random
 
 from models import *
 from country_codes import CountryCodes
+from sample_batch_responses import Sample_Responses
 
 
 class BatchItem(ABC):
@@ -59,10 +60,10 @@ class Batch(ABC):
 
     def classify(self, api_key: str) -> list:
         """ Takes in the user's API key and returns responses of this batch's request(s) and response type in the form of a list.
-        
+
         Args:
             api_key (str): The user's API key.
-        
+
         Returns:
             list: A list of responses of this batch's response type.
         """
@@ -93,7 +94,7 @@ class Batch(ABC):
 
     def export_to_excel(self, file_name: str):
         """ Creates/overwrites an excel file and represents the batch's items' data in a spreadsheet form.
-        
+
         Args:
             file_name (str): The desired Excel file name.
         """
@@ -109,7 +110,7 @@ class Batch(ABC):
 
         for num, item in enumerate(self.response):
             for column, value in enumerate(item.values()):
-                worksheet.write(num+1, column, value)
+                worksheet.write(num+1, column, str(value))
 
         workbook.close()
 
@@ -986,13 +987,18 @@ def list_separator(data: list) -> list:
     return big_list
 
 
-tester = GenderFullBatch()
-faker_obj = faker.Faker()
-for i in range(10):
-    name = str(faker_obj.name())
-    print(name)
-    country_code = random.choice(list(CountryCodes))
-    tester.addItem(name, random.randint(0, 1000))
+# tester = GenderFullBatch()
+# faker_obj = faker.Faker()
+# for i in range(10):
+#     name = str(faker_obj.name())
+#     print(name)
+#     country_code = random.choice(list(CountryCodes))
+#     tester.addItem(name, random.randint(0, 1000))
 
-tester.classify("4bd52d2351b507768236ae6acfa2894e")
-print(tester.response)
+# tester.classify("4bd52d2351b507768236ae6acfa2894e")
+# print(tester.response)
+
+tester = GenderBatch()
+random_response = Sample_Responses["ParsedNameResponses"]
+tester.response = random_response
+tester.export_to_excel("hello.xlsx")
