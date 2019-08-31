@@ -13,13 +13,13 @@ from namsorclient.country_codes import CountryCodes
 from namsorclient.request_objects import *
 
 
-# Create an instance of NamsorClient and pass in your API key as an argument
+# Create an instance of NamsorClient and pass in your API key as an argument.
 client = NamsorClient("Insert API key")
 
-# Access the gender (GET) endpoint with function that returns a response of type GenderResponse
+# Access the gender (GET) endpoint with function that returns a response of type GenderResponse.
 response = client.gender("Lelouch","Lamperouge")
 
-# Access the different parts of the response for this particular endpoint
+# Access the different parts of the response for this particular endpoint.
 
 print(response.ID)
 print(response.first_name)
@@ -29,7 +29,7 @@ print(response.gender_scale)
 print(response.score)
 print(response.probability_calibrated)
 
-# Refer to Responses section to view all different variables of each different Response
+# Refer to the Responses section to view all different variables of each different Response.
 
 
 # Access the genderBatch (POST) endpoint
@@ -44,7 +44,7 @@ response_list = client.batch(gender_batch)
 
 print(response_list[2].likely_gender)
 
-
+# Refer to the Batches section to look at the different types of batches and view the type of responses that will be returned when a batch is classified.
 ```
 
 ## API
@@ -54,35 +54,35 @@ print(response_list[2].likely_gender)
 
     - ```first_name: The desired first name. ```
     - ```last_name: The desired last name. ```
-    - ```Returns: GenderResponse ```
+    - *Returns*: ```GenderResponse ```
   
 - **genderGeo(first_name: str, last_name: str, country_code: CountryCodes)**
 *Infer the likely gender of a name, given a local context (ISO2country code).*
 
     - ```first_name: The desired first name.```
     - ```last_name: The desired last name.```
-    - ```country_code: The country code, to be passed using the CountryCodes object.```
-    - ```Returns: GenderResponse```
+    - ```country_code: The country code to aid with classification.```
+    - *Returns*: ```GenderResponse```
 
 - **genderFullGeo(full_name: str, country_code: CountryCodes)**
 *Infer the likely gender of a full name, given a local context (ISO2 country code).*
 
     - ```full_name: The name to be classified.```
     - ```country_code: The country code to aid with classification.```
-    - ```Returns: GenderResponse```
+    - *Returns*: ```GenderResponse```
 
 - **genderFull(full_name: str)**
 *Infer the likely gender of a full name, ex. John H. Smith*
 
     - ```full_name: The name to be classified.```
-    - ```Returns: GenderResponse```
+    - *Returns*: ```GenderResponse```
 
 - **usRaceEthnicity(first_name: str, last_name: str)**
 *Infer a US resident's likely race/ethnicity according to US Census taxonomy W_N(white, non latino), HL (hispano latino),  A (asian, non latino), B_NL (black, non latino).*
 
     - ```first_name: The desired first name.```
     - ```last_name: The desired last name.```
-    - ```Returns: OriginResponse```
+    - *Returns*: ```OriginResponse```
         
 - **usRaceEthnicityZIP5(first_name: str, last_name: str, zip5_code: str)**
 *Infer a US resident's likely race/ethnicity according to US Census taxonomy, usingZIP5code info. Output is W_NL (white, non latino), HL (hispano latino),  A (asian,non latino, B_NL (black, non latino).*
@@ -90,42 +90,42 @@ print(response_list[2].likely_gender)
     - ```first_name: The desired first name```
     - ```last_name: The desired last name```
     - ```zip5_code: The zip code to aid with classification```
-    - ```Returns: OriginResponse```
+    - *Returns*: ```OriginResponse```
     
 
-- **diaspora(country_code: CountryCodes, first_name: str, last_name: str)**
+- **diaspora(first_name: str, last_name: str, country_code: CountryCodes)**
 *Infer the likely ethnicity/diaspora of a personal name, given a country of residence ISO2 code*
 
-    - ```first_name (str): The desired first name. ```
-    - ```last_name (str): The desired last name. ```
-    - ```coutry_code (CountryCodes): The country code to aid with parsing. ```
-    - ```Returns: DiasporaResponse ```
+    - ```first_name: The desired first name. ```
+    - ```last_name: The desired last name. ```
+    - ```country_code: The country code to aid with classification.```
+    - *Returns*: ```DiasporaResponse ```
 
 - **parseName(full_name: str)**
 *Infer the likely first/last name structure of a name, ex. John Smith or SMITH, John or SMITH; John, given an ISO2 country of residence.*
 
-    - ```full_name (str): The full name to be parsed. ```
-    - ```Returns: ParseNameResponse ```
+    - ```full_name: The full name to be parsed. ```
+    - *Returns*: ```ParseNameResponse ```
 
 - **parseNameGeo(full_name: str, country_code: CountryCodes)**
 *Infer the likely first/last name structure of a name, ex. John Smith or SMITH, John or SMITH; John, given an ISO2 country of residence.*
 
-    - ```full_name (str): The full name to be parsed. ```
-    - ```coutry_code (CountryCodes): The country code to aid with parsing. ```
-    - ```Returns: ParseNameResponse ```
+    - ```full_name: The full name to be parsed. ```
+    - ```country_code: The country code to aid with classification.```
+    - *Returns*: ```ParseNameResponse ```
 
 - **origin(first_name: str, last_name: str)**
 *Infer the likely country of origin of a personal name. Assumes names as they are in the country of origin. For US, CA, AU, NZ and other melting-pots : use 'diaspora' instead.*
 
-    - ```first_name : The desired first name. ```
-    - ```last_name : The desired last name. ```
-    - ```Returns: OriginResponse ```
+    - ```first_name: The desired first name. ```
+    - ```last_name: The desired last name. ```
+    - *Returns*: ```OriginResponse ```
 
 - **country(full_name: str)**
-*Infer the likely country of residence of a personal full name, or one surname. Assumesnames as they are in the country of residence OR the country of origin.*
+*Infer the likely country of residence of a personal full name, or one surname. Assumes names as they are in the country of residence OR the country of origin.*
 
-    - ```full_name : The name whose country of residence should be determined. ```
-    - ```Returns: OriginResponse ```
+    - ```full_name: The name whose country of residence should be determined. ```
+    - *Returns*: ```OriginResponse ```
 
 
 
@@ -191,21 +191,21 @@ print(response_list[2].likely_gender)
 ## Batches
 The wrapper also exposes batch functions for each of the different classifications. These are to be used when multiple items need to be classified together.
 
-- ```GenderBatch``` *returns GenderResponse*
-- ```GenderGeoBatch``` *returns GenderResponse*
-- ```ParsedGenderBatch``` *returns GenderResponse*
-- ```ParsedGenderGeoBatch``` *returns GenderResponse*
-- ```GenderFullBatch``` *returns GenderFullResponse*
-- ```GenderFullGeoBatch``` *returns GenderFullResponse*
-- ```OriginBatch``` *returns OriginResponse*
-- ```CountryBatch``` *returns CountryBatch*
-- ```US_RaceEthnicityBatch``` *returns RaceEthnicityBatch*
-- ```US_ZipRaceEthnicityBatch``` *returns RaceEthnicityBatch*
-- ```DiasporaBatch``` *returns DiasporaResponse*
-- ```ParseNameBatch``` *returns ParsedNameResponse*
-- ```ParseNameGeoBatch``` *returns ParsedNameResponse*
+- ```GenderBatch``` --> `batch` *function returns* `GenderResponse` *list*     
+- ```GenderGeoBatch``` -->  `batch` *function returns* `GenderResponse` *list*
+- ```ParsedGenderBatch``` --> `batch` *function returns* `GenderResponse` *list*
+- ```ParsedGenderGeoBatch``` --> `batch` *function returns* `GenderResponse` *list*
+- ```GenderFullBatch``` --> `batch` *function returns* `GenderFullResponse` *list*
+- ```GenderFullGeoBatch``` --> `batch` *function returns* `GenderFullResponse` *list*
+- ```OriginBatch``` --> `batch` *function returns* `OriginResponse` *list*
+- ```CountryBatch``` --> `batch` *function returns* `CountryResponse` *list*
+- ```US_RaceEthnicityBatch``` --> `batch` *function returns* `RaceEthnicityResponse` *list*
+- ```US_ZipRaceEthnicityBatch``` --> `batch` *function returns* `RaceEthnicityResponse` *list*
+- ```DiasporaBatch``` --> `batch` *function returns* `DiasporaResponse` *list*
+- ```ParseNameBatch``` --> `batch` *function returns* `ParsedNameResponse` *list*
+- ```ParseNameGeoBatch``` --> `batch` *function returns* `ParsedNameResponse` *list*
 
 
 ## Country Codes
-Whenever a country code needs to be passed to any function, the CountryCodes class should be used. It exposes an enum with all recognized country codes of the world marked by the respective country's name.
+Whenever a country code needs to be passed to any function, the `CountryCodes` class should be used. It exposes an enum with all recognized country codes of the world marked by the respective country's name.
 

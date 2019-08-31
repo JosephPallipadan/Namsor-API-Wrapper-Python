@@ -16,7 +16,7 @@ setuptools.setup(
     url="https://github.com/JosephPallipadan/Namsor-API-Wrapper-Python",
     packages=setuptools.find_packages(),
     install_requires=[
-        'requests',
+        'requests', 'XlsxWriter'
     ],
     classifiers=[
         "Programming Language :: Python :: 3",

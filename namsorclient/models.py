@@ -265,11 +265,15 @@ class NameParserTypeWrapper:
         """
         self.raw_string = raw_string
 
-        if raw_string != "null":
-            print(raw_string)
-            regex = re.fullmatch(r"LN([0-9]+)FN([0-9]+)", raw_string)
+        if raw_string != None and raw_string != "null":
+            regex = ""
+            if raw_string.startswith("LN"):
+                regex = re.fullmatch(r"LN([0-9]+)FN([0-9]+)", raw_string)
+            else:
+                regex = re.fullmatch(r"FN([0-9]+)LN([0-9]+)", raw_string)
             self.first_name_count = int(regex.groups()[0])
             self.last_name_count = int(regex.groups()[1])
+            print(self)
 
     def __repr__(self):
         return self.raw_string

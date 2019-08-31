@@ -1,6 +1,8 @@
 from faker import Faker
 from random import Random
+import xlrd
 import namsorclient
+from namsorclient.sample_batch_responses import Sample_Responses
 
 random_obj = Random()
 faker_obj = Faker()
@@ -23,6 +25,11 @@ def test_list_seperator():
             block += 1
         else:
             pointer_1 += 1
+
+
+def test_export_to_excel():
+    for i in list(Sample_Responses()):
+        print(i)
 
 
 def test_GenderBatch():
@@ -400,5 +407,3 @@ def test_ParsedNameGeoBatch():
         assert item["name"] == name[0]
         assert item["countryIso2"] == name[1].value
         assert item["id"] == name[2]
-
-

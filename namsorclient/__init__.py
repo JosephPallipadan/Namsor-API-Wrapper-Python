@@ -36,34 +36,6 @@ class NamsorClient:
         """
         return requests.get(url=f"{BASE_URL}{url}", headers={"X-API-KEY": self.api_key})
 
-    def __api_post(self, url, data) -> requests.models.Response:
-        """ returns a response containing desired information of the data
-        Args:
-            url (str): ending portion of NamsorAPI url to desired section
-            data (dict): the high throughput data to process
-        Returns:
-            requests.models.Response: the response received from this POST request
-        """
-        return requests.post(url=f"{BASE_URL}{url}", headers={"X-API-KEY": self.api_key}, json=data)
-
-    def batch(self, item_group: Batch) -> list:
-
-        personal_names_list = item_group.batch_item_converter()
-
-        response_list = []
-        item_list = list_separator(personal_names_list)
-
-        for item in item_list:
-            payload = {}
-            payload['personalNames'] = item
-            response = self.__api_post(url=item_group.url, data=payload).json()[
-                'personalNames']
-            for i in range(len(response)):
-                response_list.append(item_group.response_type(response[i]))
-            time.sleep(1)
-
-        return response_list
-
     def gender(self, first_name: str, last_name: str) -> GenderResponse:
         """ Infer the likely gender of a name.
         Args:
@@ -135,12 +107,12 @@ class NamsorClient:
         url = f"usRaceEthnicity/{first_name}/{last_name}/{zip5_code}"
         return RaceEthnicityResponse(self.__api_get(url=url).json())
 
-    def diaspora(self, country_code: CountryCodes, first_name: str, last_name: str) -> DiasporaResponse:
-        """Infer the likely ethnicity/diaspora of a personal name, given a country of residence ISO2 code
+    def diaspora(self, first_name: str, last_name: str, country_code: CountryCodes) -> DiasporaResponse:
+        """ Infer the likely ethnicity/diaspora of a personal name, given a country of residence ISO2 code
         Args:
-            country_code (CountryCodes): The country code to aid with classification.
             first_name (str): The desired first name.
             last_name (str): The desired last name
+            country_code (CountryCodes): The country code to aid with classification.
         Returns:
             OriginResponse: An object which is a wrapper of the API's response object for this particular endpoint.
         """
