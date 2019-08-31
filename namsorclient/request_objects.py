@@ -38,7 +38,7 @@ class Batch(ABC):
         """
         self.items.append(item)
 
-    def __api_post(self, url: str, data: dict, api_key: str) -> requests.models.Response:
+    def api_post(self, url: str, data: dict, api_key: str) -> requests.models.Response:
         """ Returns a response containing desired information of the data.
         Args:
             url (str): Ending portion of NamsorAPI url to desired section.
@@ -46,10 +46,10 @@ class Batch(ABC):
         Returns:
             requests.models.Response: The response received from this POST request.
         """
+        print("FUCKKKKKKKKKKK")
         BASE_URL = "https://v2.namsor.com/NamSorAPIv2/api2/json/"
         r = requests.post(url=f"{BASE_URL}{url}", headers={"X-API-KEY":
                                                            api_key}, json=data)
-
         if r.status_code == 401:
             # The client has not entered his/her API key or the API key is incorrect.
             raise Exception('Invalid API Key')
@@ -68,11 +68,9 @@ class Batch(ABC):
             list: A list of responses of this batch's response type.
         """
 
-        # While the choice to include the error checking in the get request wrapper does somewhat compromise the elegance of the code base, the alternative, which would mean performing a request prior, potentially wastes a classification from the user's account and thus it was decided to prioritize the user's experience, especially given the non efficiency-intensive nature of the likely utilization of the wrapper
-
         # Stores the batch's items' data in appropriate JSON format in personal_names_list
         personal_names_list = self.batch_item_converter()
-        #
+        
         response_list = []
         # Data is separated into blocks to bypass the 100 item limit
         item_list = list_separator(personal_names_list)
@@ -81,10 +79,12 @@ class Batch(ABC):
             # Data is to be put in the appropriate format and be passed in as an argument of the POST request
             payload = {}
             payload['personalNames'] = item
-            response = self.__api_post(url=self.url, data=payload, api_key=api_key).json()[
+            response = self.api_post(url=self.url, data=payload, api_key=api_key).json()[
                 'personalNames']
+
             # This response from the POST request is appended to the previous responses
             self.response += response
+            print(response)
             for i in range(len(response)):
                 response_list.append(self.response_type(response[i]))
             # A one second delay for latency
@@ -102,6 +102,9 @@ class Batch(ABC):
         worksheet = workbook.add_worksheet()
 
         for column, item in enumerate(self.response[0].keys()):
+
+            # Regex to convert the keys from camel-case to Capital Case separated by hyphens
+            # Eg: firstName to First-Name
             match = re.match(
                 r'([a-z]+)([A-Z]*[a-z]*)([A-Z]*[a-z]*)([A-Z]*[a-z]*)', item).groups()
             row_title = '-'.join([i[0].upper() + i[1:]
@@ -169,7 +172,7 @@ class GenderBatch(Batch):
             list: A list of dictionaries each containing each batch item's data.
         """
         items_list = []
-        for items in items_list:
+        for item in self.items:
             items_list.append({
                 "id": item.ID,
                 "firstName": item.first_name,
@@ -980,25 +983,9 @@ def list_separator(data: list) -> list:
     Returns:
         list: A list of lists each having a maximum of 100 items.
     """
+
     big_list = []
     total_num = math.ceil(len(data)/100)
     for i in range(total_num):
         big_list.append(data[i*100:(i+1)*100])
     return big_list
-
-
-# tester = GenderFullBatch()
-# faker_obj = faker.Faker()
-# for i in range(10):
-#     name = str(faker_obj.name())
-#     print(name)
-#     country_code = random.choice(list(CountryCodes))
-#     tester.addItem(name, random.randint(0, 1000))
-
-# tester.classify("4bd52d2351b507768236ae6acfa2894e")
-# print(tester.response)
-
-tester = GenderBatch()
-random_response = Sample_Responses["ParsedNameResponses"]
-tester.response = random_response
-tester.export_to_excel("hello.xlsx")

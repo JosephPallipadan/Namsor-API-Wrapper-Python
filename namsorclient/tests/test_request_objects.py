@@ -1,34 +1,46 @@
-from faker import Faker
-from random import Random
-import xlrd
 import re
+import random
+
+from faker import Faker
+import xlrd
+
 import namsorclient
 from namsorclient.sample_batch_responses import Sample_Responses
 
-random_obj = Random()
 faker_obj = Faker()
 
 
 def test_list_seperator():
-    total_num = random_obj.randint(100, 1000)
-    tester = [random_obj.randint(1, 1000) for i in range(total_num)]
-    tester_copy = tester.copy()
+    """
+    To test the list_seperator function, a total element number is used which goes from 0 to 1000.
+    An array of size total_num is created with random numbers in the indexes.
 
-    tester = namsorclient.list_separator(tester)
+    Then the separated array is generated. Using three pointers, one for pointing to a block of the 
+    separated array, one for pointing to an index within the block and one pointer for the initial array.
+    The assertions make sure that if the separated array was iterated element by element, block by block,
+    the elements encountered would be the same as iterating through the initial array.
+    """
+    for total_num in range(0, 1000):
+        initial = [random.randint(0, 1000) for i in range(total_num)]
+        final = namsorclient.list_separator(initial)
 
-    block, pointer_1, pointer_2 = 0, 0, 0
-    while pointer_2 < len(tester_copy):
-        assert tester_copy[pointer_2] == tester[block][pointer_1]
+        block, pointer_1, pointer_2 = 0, 0, 0
+        while pointer_2 < total_num:
+            assert initial[pointer_2] == final[block][pointer_1]
 
-        pointer_2 += 1
-        if pointer_1 == 99:
-            pointer_1 = 0
-            block += 1
-        else:
-            pointer_1 += 1
+            pointer_2 += 1
+            if pointer_1 == 99:
+                pointer_1 = 0
+                block += 1
+            else:
+                pointer_1 += 1
 
 
 def test_export_to_excel():
+    """
+    The test for the export to excel function involves using the sample_batch_responses file,
+    which contains sample responses from all the different response types. The export to excel function is called and then the file is read to ensure that all the values match. 
+    """
     tester = namsorclient.GenderBatch()
 
     for response_type in Sample_Responses.keys():
@@ -54,6 +66,11 @@ def test_export_to_excel():
                 assert str(response_value) == str(row_value)
 
 
+"""
+The testing for all the batches follows a similar overall structure which involves
+instantiating the batch object, generating sample data using the faker class and
+then comparing the data to the properties of the instantiated object.
+"""
 
 def test_GenderBatch():
     tester = namsorclient.GenderBatch()
@@ -86,7 +103,7 @@ def test_GenderGeoBatch():
     names = []
     for id in range(10):
         name = str(faker_obj.name()).split(" ")[:2]
-        country_code = random_obj.choice(list(namsorclient.CountryCodes))
+        country_code = random.choice(list(namsorclient.CountryCodes))
 
         name.append(country_code)
         name.append(id)
@@ -152,7 +169,7 @@ def test_ParsedGenderGeoBatch():
     names = []
     for id in range(10):
         name = str(faker_obj.name()).split(" ")
-        country_code = random_obj.choice(list(namsorclient.CountryCodes))
+        country_code = random.choice(list(namsorclient.CountryCodes))
 
         while len(name) < 3:
             name = str(faker_obj.name()).split(" ")
@@ -214,7 +231,7 @@ def test_GenderFullGeoBatch():
     names = []
     for id in range(10):
         name = [faker_obj.name()]
-        country_code = random_obj.choice(list(namsorclient.CountryCodes))
+        country_code = random.choice(list(namsorclient.CountryCodes))
 
         name.append(country_code)
         name.append(id)
@@ -291,7 +308,7 @@ def test_USRaceEthnicityBatch():
     names = []
     for id in range(10):
         name = str(faker_obj.name()).split(" ")[:2]
-        country_code = random_obj.choice(list(namsorclient.CountryCodes))
+        country_code = random.choice(list(namsorclient.CountryCodes))
 
         name.append(country_code)
         name.append(id)
@@ -322,10 +339,10 @@ def test_ZipRaceEthnicityBatch():
     names = []
     for id in range(10):
         name = str(faker_obj.name()).split(" ")[:2]
-        country_code = random_obj.choice(list(namsorclient.CountryCodes))
+        country_code = random.choice(list(namsorclient.CountryCodes))
 
         name.append(country_code)
-        name.append(str(random_obj.randint(10000, 99999)))
+        name.append(str(random.randint(10000, 99999)))
         name.append(id)
 
         names.append(name)
@@ -355,7 +372,7 @@ def test_DiasporaBatch():
     names = []
     for id in range(10):
         name = str(faker_obj.name()).split(" ")[:2]
-        country_code = random_obj.choice(list(namsorclient.CountryCodes))
+        country_code = random.choice(list(namsorclient.CountryCodes))
 
         name.append(country_code)
         name.append(id)
@@ -410,7 +427,7 @@ def test_ParsedNameGeoBatch():
     names = []
     for id in range(10):
         name = [faker_obj.name()]
-        country_code = random_obj.choice(list(namsorclient.CountryCodes))
+        country_code = random.choice(list(namsorclient.CountryCodes))
 
         name.append(country_code)
         name.append(id)

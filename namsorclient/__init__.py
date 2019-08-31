@@ -34,6 +34,9 @@ class NamsorClient:
         Returns:
             requests.models.Response: the response received from this GET request
         """
+
+        # While the choice to include the error checking in the get request wrapper does somewhat compromise the elegance of the code base, the alternative, which would mean performing a request prior, potentially wastes a classification from the user's account and thus it was decided to prioritize the user's experience, especially given the non efficiency-intensive nature of the likely utilization of the wrapper
+
         return requests.get(url=f"{BASE_URL}{url}", headers={"X-API-KEY": self.api_key})
 
     def gender(self, first_name: str, last_name: str) -> GenderResponse:
