@@ -1,12 +1,25 @@
-import namsorclient
 import random
+
+import namsorclient
 
 
 def test_NameParserType():
+    """
+    An arbitrary collection of data is created and represented
+    as a list of tuples with 2 elements each. The 2 items in a tuple 
+    are used to create a sample value for the NameParserType key in
+    the response from the ParseName endpoints.
+
+    A NameParserTypeWrapper is instantiated with the generated sample data
+    and the assertions ensure that the object is created correctly. 
+    """
     tests = [(1, 1), (10, 11), (0, 500), (1190, 0)]
     for i in tests:
-        raw_string = f'LN{i[0]}FN{i[1]}'
+        choices = [f'LN{i[0]}FN{i[1]}', f'FN{i[0]}LN{i[1]}']
+        raw_string = random.choice(choices)
+
         tester = namsorclient.NameParserTypeWrapper(raw_string)
+
         assert str(tester) == raw_string
         assert tester.first_name_count == i[0]
         assert tester.last_name_count == i[1]
