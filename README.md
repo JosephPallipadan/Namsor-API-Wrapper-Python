@@ -36,17 +36,25 @@ print(response.probability_calibrated)
 gender_batch = GenderBatch()
 
 # Add items, with required arguments, to the batch you want
-gender_batch.addItem("Lelouch","Lamperouge","A2140")
-gender_batch.addItem("Gon","Freecs", "M0245")
-gender_batch.addItem("Jonathan","Joestar", "M0014")
+gender_batch.addItem("Lelouch","Lamperouge","A2773")
+gender_batch.addItem("Gon","Freecs", "M9835")
+gender_batch.addItem("Jonathan","Joestar", "M6104")
 
-response_list = client.batch(gender_batch)
+# Use classify function with required API Key argument and receive responses in the form of a list.
+response_list = gender_batch.classify("Insert API key")
 
 print(response_list[2].likely_gender)
 
 # Refer to the Batches section to look at the different types of batches and view the type of responses that will be returned when a batch is classified.
 ```
 
+
+Use the `export_to_excel` function to create a file with the required file name to represent the batch's data in spreadsheet form. 
+```python 
+gender_batch.export_to_excel("File Name.xlsx")
+```
+**Result:**
+![GitHub Logo](spreadsheet_example.png)
 ## API
 
 - **gender(first_name: str, last_name: str)**
@@ -191,19 +199,19 @@ print(response_list[2].likely_gender)
 ## Batches
 The wrapper also exposes batch functions for each of the different classifications. These are to be used when multiple items need to be classified together.
 
-- ```GenderBatch``` --> `batch` *function returns* `GenderResponse` *list*     
-- ```GenderGeoBatch``` -->  `batch` *function returns* `GenderResponse` *list*
-- ```ParsedGenderBatch``` --> `batch` *function returns* `GenderResponse` *list*
-- ```ParsedGenderGeoBatch``` --> `batch` *function returns* `GenderResponse` *list*
-- ```GenderFullBatch``` --> `batch` *function returns* `GenderFullResponse` *list*
-- ```GenderFullGeoBatch``` --> `batch` *function returns* `GenderFullResponse` *list*
-- ```OriginBatch``` --> `batch` *function returns* `OriginResponse` *list*
-- ```CountryBatch``` --> `batch` *function returns* `CountryResponse` *list*
-- ```US_RaceEthnicityBatch``` --> `batch` *function returns* `RaceEthnicityResponse` *list*
-- ```US_ZipRaceEthnicityBatch``` --> `batch` *function returns* `RaceEthnicityResponse` *list*
-- ```DiasporaBatch``` --> `batch` *function returns* `DiasporaResponse` *list*
-- ```ParseNameBatch``` --> `batch` *function returns* `ParsedNameResponse` *list*
-- ```ParseNameGeoBatch``` --> `batch` *function returns* `ParsedNameResponse` *list*
+- ```GenderBatch``` --> `classify` *function returns* `GenderResponse` *list*     
+- ```GenderGeoBatch``` -->  `classify` *function returns* `GenderResponse` *list*
+- ```ParsedGenderBatch``` --> `classify` *function returns* `GenderResponse` *list*
+- ```ParsedGenderGeoBatch``` --> `classify` *function returns* `GenderResponse` *list*
+- ```GenderFullBatch``` --> `classify` *function returns* `GenderFullResponse` *list*
+- ```GenderFullGeoBatch``` --> `classify` *function returns* `GenderFullResponse` *list*
+- ```OriginBatch``` --> `classify` *function returns* `OriginResponse` *list*
+- ```CountryBatch``` --> `classify` *function returns* `CountryResponse` *list*
+- ```US_RaceEthnicityBatch``` --> `classify` *function returns* `RaceEthnicityResponse` *list*
+- ```US_ZipRaceEthnicityBatch``` --> `classify` *function returns* `RaceEthnicityResponse` *list*
+- ```DiasporaBatch``` --> `classify` *function returns* `DiasporaResponse` *list*
+- ```ParseNameBatch``` --> `classify` *function returns* `ParsedNameResponse` *list*
+- ```ParseNameGeoBatch``` --> `classify` *function returns* `ParsedNameResponse` *list*
 
 
 ## Country Codes

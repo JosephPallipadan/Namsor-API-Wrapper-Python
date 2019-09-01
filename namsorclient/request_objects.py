@@ -50,6 +50,8 @@ class Batch(ABC):
         r = requests.post(url=f"{BASE_URL}{url}", headers={"X-API-KEY":
                                                            api_key}, json=data)
 
+        if r.status_code is not 200:
+            raise Exception("YEET")
         if r.status_code == 401:
             # The client has not entered his/her API key or the API key is incorrect.
             raise Exception('Invalid API Key')
@@ -93,21 +95,25 @@ class Batch(ABC):
         return response_list
 
     def export_to_excel(self, file_name: str):
-        """ Creates/overwrites an excel file and represents the batch's items' data in a spreadsheet form.
+        """ Creates an excel file and represents the batch's items' data in a spreadsheet form.
 
         Args:
             file_name (str): The desired Excel file name.
         """
+        # Creates a Excel workbook, with the desired file name, and a worksheet.
         workbook = xlsxwriter.Workbook(file_name)
         worksheet = workbook.add_worksheet()
 
+
         for column, item in enumerate(self.response[0].keys()):
+            # This section puts the responses' attributes' titles in a proper format and adds them to the header row of the excel file.
             match = re.match(
                 r'([a-z]+)([A-Z]*[a-z]*)([A-Z]*[a-z]*)([A-Z]*[a-z]*)', item).groups()
             row_title = '-'.join([i[0].upper() + i[1:]
                                   for i in match if i != ''])
             worksheet.write(0, column, row_title)
 
+        # Adds the responses' data to their appropriate cells.
         for num, item in enumerate(self.response):
             for column, value in enumerate(item.values()):
                 worksheet.write(num+1, column, str(value))
@@ -169,7 +175,7 @@ class GenderBatch(Batch):
             list: A list of dictionaries each containing each batch item's data.
         """
         items_list = []
-        for items in items_list:
+        for item in self.items:
             items_list.append({
                 "id": item.ID,
                 "firstName": item.first_name,
@@ -177,7 +183,6 @@ class GenderBatch(Batch):
             })
 
         return items_list
-
 
 class GenderGeoBatch(Batch):
     """
@@ -987,18 +992,4 @@ def list_separator(data: list) -> list:
     return big_list
 
 
-# tester = GenderFullBatch()
-# faker_obj = faker.Faker()
-# for i in range(10):
-#     name = str(faker_obj.name())
-#     print(name)
-#     country_code = random.choice(list(CountryCodes))
-#     tester.addItem(name, random.randint(0, 1000))
 
-# tester.classify("4bd52d2351b507768236ae6acfa2894e")
-# print(tester.response)
-
-tester = GenderBatch()
-random_response = Sample_Responses["ParsedNameResponses"]
-tester.response = random_response
-tester.export_to_excel("hello.xlsx")

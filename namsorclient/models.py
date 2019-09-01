@@ -7,13 +7,13 @@ class GenderResponse:
         A class that acts as a wrapper for all responses which classify a name into a gender.
 
         Attributes:
-            ID (str): The ID of the request
-            first_name (str): The first name that was classified
-            last_name (str): The last name that was classified
-            likely_gender (str): The likely gender inferred from input (male or female)
-            gender_scale (int): The gender scale inferred from input (-1 or 1)
-            score (float): The score of the precision of the gender information provided ranging from 0 to 50
-            probability_calibrated (float): The probability that the gender information provided is correct
+            ID (str): The ID of the request.
+            first_name (str): The first name that was classified.
+            last_name (str): The last name that was classified.
+            likely_gender (str): The likely gender inferred from input (male or female).
+            gender_scale (int): The gender scale inferred from input (-1 or 1).
+            score (float): The score of the precision of the gender information provided.
+            probability_calibrated (float): The probability that the gender information provided is correct.
     """
 
     ID = ""
@@ -27,7 +27,7 @@ class GenderResponse:
     def __init__(self, api_response: dict):
         """ Constructor
         Args:
-            api_response (dict): the json format (dict) of the NamsorAPI response received from a GET/POST request
+            api_response (dict): The json format (dict) of the NamsorAPI response received from a GET/POST request.
         """
 
         self.ID = api_response['id']
@@ -46,11 +46,11 @@ class GenderFullResponse:
         A class that acts as a wrapper for all responses of POST requests which classify a full name into a gender.
 
         Attributes:
-            ID (str): The ID of the request
-            name (str): The name that was classified
-            likely_gender (str): The likely gender inferred from input (male or female)
-            gender_scale (int): The gender scale inferred from input (-1 or 1)
-            score (float): The score of the precision of the gender information provided ranging from 0 to 50
+            ID (str): The ID of the request.
+            name (str): The name that was classified.
+            likely_gender (str): The likely gender inferred from input (male or female).
+            gender_scale (int): The gender scale inferred from input (-1 or 1).
+            score (float): The score of the precision of the gender information provided.
     """
 
     ID = ""
@@ -62,7 +62,7 @@ class GenderFullResponse:
     def __init__(self, api_response: dict):
         """ Constructor
         Args:
-            api_response (dict): the json format (dict) of the NamsorAPI response received from a GET/POST request
+            api_response (dict): The json format (dict) of the NamsorAPI response received from a GET/POST request.
         """
 
         self.ID = api_response['id']
@@ -77,18 +77,18 @@ class OriginResponse:
         A class that acts as a wrapper for all responses which infer the origin of an individual with a particular name.
 
         Attributes:
-            ID (str): The ID of the request
-            first_name (str): The first name that was classified
-            last_name (str): The last name that was classified
-            likely_gender (str): The likely gender inferred from input (male or female)
-            gender_scale (int): The gender scale inferred from input (-1 or 1)
-            score (float): The score of the precision of the gender information provided ranging from 0 to 50
+            ID (str): The ID of the request.
+            first_name (str): The first name that was classified.
+            last_name (str): The last name that was classified.
+            likely_gender (str): The likely gender inferred from input (male or female).
+            gender_scale (int): The gender scale inferred from input (-1 or 1).
+            score (float): The score of the precision of the gender information provided.
             country_origin (str): The most likely country that the individual with this name belongs to.
             country_origin_alt (str): A potential alternative country that the individual with this name belongs to.
-            probability_calibrated (float): The probability that the classification is correct
-            region_origin (str):
-            top_region_origin (str):
-            sub_region_origin (str): 
+            probability_calibrated (float): The probability that the classification is correct.
+            region_origin (str): The most likely region that the individual with this name belongs to.
+            top_region_origin (str): The most likely region that the individual with this name belongs to.
+            sub_region_origin (str): The most likely subregion that the individual with this name belongs to.
     """
     ID = ""
     first_name = ""
@@ -105,7 +105,7 @@ class OriginResponse:
     def __init__(self, api_response: dict):
         """ Constructor
         Args:
-            api_response (dict): the json format (dict) of the NamsorAPI response received from a GET/POST request
+            api_response (dict): The json format (dict) of the NamsorAPI response received from a GET/POST request.
         """
         self.ID = api_response['id']
         self.first_name = api_response['firstName']
@@ -124,7 +124,7 @@ class CountryResponse:
         """ Constructor
 
         Args:
-            api_response (dict): the json format (dict) of the NamsorAPI response received from a GET/POST request
+            api_response (dict): The json format (dict) of the NamsorAPI response received from a GET/POST request.
         """
 
         self.ID = api_response['id']
@@ -142,10 +142,10 @@ class RaceEthnicityResponse:
         A class that acts as a wrapper for all responses which infer the ethnicity of an individual with a particular name.
 
         Attributes:
-            ID (str): The ID of the request
-            first_name (str): The first name that was classified
-            last_name (str): The last name that was classified
-            score (float): The score of the precision of the gender information provided ranging from 0 to 50
+            ID (str): The ID of the request.
+            first_name (str): The first name that was classified.
+            last_name (str): The last name that was classified.
+            score (float): The score of the precision of the gender information provided.
             race_ethnicity (str): The most likely ethnicity of an individual with said name.
             race_ethnicity_alt (str): A potential alternative ethnicity that the individual can have.
     """
@@ -159,7 +159,7 @@ class RaceEthnicityResponse:
     def __init__(self, api_response: dict):
         """ Constructor
         Args:
-            api_response (dict): the json format (dict) of the NamsorAPI response received from a GET/POST request
+            api_response (dict): The json format (dict) of the NamsorAPI response received from a GET/POST request.
         """
         self.ID = api_response['id']
         self.first_name = api_response['firstName']
@@ -174,13 +174,13 @@ class DiasporaResponse:
         A class that acts as a wrapper for the diaspora response object.
 
         Attributes:
-            ID (str): The ID of the request
-            first_name (str): The first name that was classified
-            last_name (str): The last name that was classified
-            score (float): The score of the precision of the gender information provided ranging from 0 to 50
+            ID (str): The ID of the request.
+            first_name (str): The first name that was classified.
+            last_name (str): The last name that was classified.
+            score (float): The score of the precision of the gender information provided.
             race_ethnicity (str): The most likely ethnicity of an individual with said name.
             race_ethnicity_alt (str): A potential alternative ethnicity that the individual can have.
-            lifted (str):
+            lifted (str): N/A
             country (str): The ISO2 code of the country to which an indiviudal with this name liekly belongs to.
     """
 
@@ -196,7 +196,7 @@ class DiasporaResponse:
     def __init__(self, api_response: dict):
         """ Constructor
         Args:
-            api_response (dict): the json format (dict) of the NamsorAPI response received from a GET/POST request
+            api_response (dict): The json format (dict) of the NamsorAPI response received from a GET/POST request.
         """
         self.ID = api_response['id']
         self.first_name = api_response['firstName']
@@ -213,15 +213,15 @@ class ParseNameResponse:
         A class that acts as a wrapper for the response object of all the parseName routes.
 
         Attributes:
-            ID (str): The ID of the request
-            name (str): The full name to be parsed
+            ID (str): The ID of the request.
+            name (str): The full name to be parsed.
             name_parser_type (NameParserTypeWrapper): An object which contains data about how many words from the full name were classified into first names and last names.
 
             name_parser_type_alt (NameParserTypeWrapper): An object which contains another potential form of data about how many words from the full name were classified into first names and last names.
 
             first_last_name (FirstLastNameWrapper): An object which contains the most likely first name/ last name format that the full name would be arranged in.
 
-            score (float): The score of the precision of the gender information provided ranging from 0 to 50
+            score (float): The score of the precision of the gender information provided.
     """
     ID = ""
     name = ""
@@ -233,7 +233,7 @@ class ParseNameResponse:
     def __init__(self, api_response: dict):
         """ Constructor
         Args:
-            api_response (dict): the json format (dict) of the NamsorAPI response received from a GET/POST request
+            api_response (dict): The json format (dict) of the NamsorAPI response received from a GET/POST request.
         """
         self.ID = api_response['id']
         self.name = api_response['name']
