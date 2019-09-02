@@ -21,7 +21,6 @@ response = client.gender("Lelouch","Lamperouge")
 
 # Access the different parts of the response for this particular endpoint.
 
-print(response.ID)
 print(response.first_name)
 print(response.last_name)
 print(response.likely_gender)
