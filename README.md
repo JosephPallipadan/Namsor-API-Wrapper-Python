@@ -191,21 +191,25 @@ print(response_list[2].likely_gender)
 ## Batches
 The wrapper also exposes batch functions for each of the different classifications. These are to be used when multiple items need to be classified together.
 
-- ```GenderBatch``` --> `batch` *function returns* `GenderResponse` *list*     
-- ```GenderGeoBatch``` -->  `batch` *function returns* `GenderResponse` *list*
-- ```ParsedGenderBatch``` --> `batch` *function returns* `GenderResponse` *list*
-- ```ParsedGenderGeoBatch``` --> `batch` *function returns* `GenderResponse` *list*
-- ```GenderFullBatch``` --> `batch` *function returns* `GenderFullResponse` *list*
-- ```GenderFullGeoBatch``` --> `batch` *function returns* `GenderFullResponse` *list*
-- ```OriginBatch``` --> `batch` *function returns* `OriginResponse` *list*
-- ```CountryBatch``` --> `batch` *function returns* `CountryResponse` *list*
-- ```US_RaceEthnicityBatch``` --> `batch` *function returns* `RaceEthnicityResponse` *list*
-- ```US_ZipRaceEthnicityBatch``` --> `batch` *function returns* `RaceEthnicityResponse` *list*
-- ```DiasporaBatch``` --> `batch` *function returns* `DiasporaResponse` *list*
-- ```ParseNameBatch``` --> `batch` *function returns* `ParsedNameResponse` *list*
-- ```ParseNameGeoBatch``` --> `batch` *function returns* `ParsedNameResponse` *list*
+- ```GenderBatch``` --> `classify` *function returns* `GenderResponse` *list*     
+- ```GenderGeoBatch``` -->  `classify` *function returns* `GenderResponse` *list*
+- ```ParsedGenderBatch``` --> `classify` *function returns* `GenderResponse` *list*
+- ```ParsedGenderGeoBatch``` --> `classify` *function returns* `GenderResponse` *list*
+- ```GenderFullBatch``` --> `classify` *function returns* `GenderFullResponse` *list*
+- ```GenderFullGeoBatch``` --> `classify` *function returns* `GenderFullResponse` *list*
+- ```OriginBatch``` --> `classify` *function returns* `OriginResponse` *list*
+- ```CountryBatch``` --> `classify` *function returns* `CountryResponse` *list*
+- ```US_RaceEthnicityBatch``` --> `classify` *function returns* `RaceEthnicityResponse` *list*
+- ```US_ZipRaceEthnicityBatch``` --> `classify` *function returns* `RaceEthnicityResponse` *list*
+- ```DiasporaBatch``` --> `classify` *function returns* `DiasporaResponse` *list*
+- ```ParseNameBatch``` --> `classify` *function returns* `ParsedNameResponse` *list*
+- ```ParseNameGeoBatch``` --> `classify` *function returns* `ParsedNameResponse` *list*
 
 
 ## Country Codes
 Whenever a country code needs to be passed to any function, the `CountryCodes` class should be used. It exposes an enum with all recognized country codes of the world marked by the respective country's name.
+
+## Contributing
+To contribute to this repository, fork it and make changes. To run tests, cd into namsorclient and 
+run ```python -m pytest```. If all tests pass, sumbit a pull request.
 
