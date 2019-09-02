@@ -91,13 +91,15 @@ class Batch(ABC):
         return response_list
 
     def export_to_excel(self, file_name: str):
-        """ Creates/overwrites an excel file and represents the batch's items' data in a spreadsheet form.
+        """ Creates an excel file and represents the batch's items' data in a spreadsheet form.
 
         Args:
             file_name (str): The desired Excel file name.
         """
+        # Creates a Excel workbook, with the desired file name, and a worksheet.
         workbook = xlsxwriter.Workbook(file_name)
         worksheet = workbook.add_worksheet()
+
 
         for column, item in enumerate(self.response[0].keys()):
 
@@ -109,6 +111,7 @@ class Batch(ABC):
                                   for i in match if i != ''])
             worksheet.write(0, column, row_title)
 
+        # Adds the responses' data to their appropriate cells.
         for num, item in enumerate(self.response):
             for column, value in enumerate(item.values()):
                 worksheet.write(num+1, column, str(value))
@@ -178,7 +181,6 @@ class GenderBatch(Batch):
             })
 
         return items_list
-
 
 class GenderGeoBatch(Batch):
     """
@@ -987,3 +989,6 @@ def list_separator(data: list) -> list:
     for i in range(total_num):
         big_list.append(data[i*100:(i+1)*100])
     return big_list
+
+
+
