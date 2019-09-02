@@ -2,9 +2,9 @@ import json
 import requests
 import time
 
-from namsorclient.models import *
-from namsorclient.request_objects import *
-from namsorclient.country_codes import CountryCodes
+from models import *
+from request_objects import *
+from country_codes import CountryCodes
 
 
 BASE_URL = "https://v2.namsor.com/NamSorAPIv2/api2/json/"

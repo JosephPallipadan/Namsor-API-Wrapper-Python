@@ -219,5 +219,5 @@ Whenever a country code needs to be passed to any function, the `CountryCodes` c
 
 ## Contributing
 To contribute to this repository, fork it and make changes. To run tests, cd into namsorclient and 
-run ```python -m pytest```. If all tests pass, sumbit a pull request.
+run ```python -m pytest```. If all tests pass, sumbit a pull request. Note that the faker and xlrd modules are required for testing.
 

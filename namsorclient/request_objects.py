@@ -8,8 +8,8 @@ import requests
 import faker
 import random
 
-from namsorclient.models import *
-from namsorclient.country_codes import CountryCodes
+from models import *
+from country_codes import CountryCodes
 
 
 class BatchItem(ABC):
