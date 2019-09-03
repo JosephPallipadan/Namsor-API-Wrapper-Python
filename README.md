@@ -1,5 +1,6 @@
 ## Overview
 *namsor-client* is a python package that serves as a wrapper for the Namsor classification API.
+PyPI link: https://pypi.org/project/namsor-client/
 
 ## Installation
 
