@@ -12,8 +12,8 @@ class GenderResponse:
             last_name (str): The last name that was classified.
             likely_gender (str): The likely gender inferred from input (male or female).
             gender_scale (int): The gender scale inferred from input (-1 or 1).
-            score (float): The score of the precision of the gender information provided.
-            probability_calibrated (float): The probability that the gender information provided is correct.
+            score (float): The score of the precision of the information provided.
+            probability_calibrated (float): The probability that the information provided is correct.
     """
 
     ID = ""
@@ -50,7 +50,7 @@ class GenderFullResponse:
             name (str): The name that was classified.
             likely_gender (str): The likely gender inferred from input (male or female).
             gender_scale (int): The gender scale inferred from input (-1 or 1).
-            score (float): The score of the precision of the gender information provided.
+            score (float): The score of the precision of the information provided.
     """
 
     ID = ""
@@ -82,13 +82,13 @@ class OriginResponse:
             last_name (str): The last name that was classified.
             likely_gender (str): The likely gender inferred from input (male or female).
             gender_scale (int): The gender scale inferred from input (-1 or 1).
-            score (float): The score of the precision of the gender information provided.
-            country_origin (str): The most likely country that the individual with this name belongs to.
-            country_origin_alt (str): A potential alternative country that the individual with this name belongs to.
+            score (float): The score of the precision of the information provided.
+            country_origin (str): The most likely country that the individual with this name originates from.
+            country_origin_alt (str): A potential alternative country that the individual with this name originates from.
             probability_calibrated (float): The probability that the classification is correct.
-            region_origin (str): The most likely region that the individual with this name belongs to.
-            top_region_origin (str): The most likely region that the individual with this name belongs to.
-            sub_region_origin (str): The most likely subregion that the individual with this name belongs to.
+            region_origin (str): The most likely region that the individual with this name originates from.
+            top_region_origin (str): The most likely region that the individual with this originates from.
+            sub_region_origin (str): The most likely subregion that the individual with this name originates from.
     """
     ID = ""
     first_name = ""
@@ -119,6 +119,26 @@ class OriginResponse:
 
 
 class CountryResponse:
+    """ A class that acts as a wrapper for all responses which infer the country an individual with a particular name belongs to.
+
+    Attributes:
+            ID (str): The ID of the request.
+            name (str): Tbe name that was classified.
+            score (float): The score of the precision of the information provided.
+            country (str): The most likely country that the individual with this name belongs to.
+            country_alt (str): A potential alternative country that the individual with this name belongs to.
+            region (str): The most likely region that the individual with this name belongs to.
+            top_region (str): The most likely region that the individual with this name belongs to.
+            sub_region (str): The most likely subregion that the individual with this name belongs to.
+    """
+    ID = ""
+    name = ""
+    score = 0.0
+    country = ""
+    country_alt = ""
+    region = ""
+    top_region = ""
+    sub_region = ""
 
     def __init__(self, api_response: dict):
         """ Constructor
@@ -145,7 +165,7 @@ class RaceEthnicityResponse:
             ID (str): The ID of the request.
             first_name (str): The first name that was classified.
             last_name (str): The last name that was classified.
-            score (float): The score of the precision of the gender information provided.
+            score (float): The score of the precision of the information provided.
             race_ethnicity (str): The most likely ethnicity of an individual with said name.
             race_ethnicity_alt (str): A potential alternative ethnicity that the individual can have.
     """
@@ -177,7 +197,7 @@ class DiasporaResponse:
             ID (str): The ID of the request.
             first_name (str): The first name that was classified.
             last_name (str): The last name that was classified.
-            score (float): The score of the precision of the gender information provided.
+            score (float): The score of the precision of the information provided.
             race_ethnicity (str): The most likely ethnicity of an individual with said name.
             race_ethnicity_alt (str): A potential alternative ethnicity that the individual can have.
             lifted (str): N/A
@@ -221,7 +241,7 @@ class ParseNameResponse:
 
             first_last_name (FirstLastNameWrapper): An object which contains the most likely first name/ last name format that the full name would be arranged in.
 
-            score (float): The score of the precision of the gender information provided.
+            score (float): The score of the precision of the information provided.
     """
     ID = ""
     name = ""

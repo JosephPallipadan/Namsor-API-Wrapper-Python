@@ -54,7 +54,7 @@ Use the `export_to_excel` function to create a file with the required file name 
 gender_batch.export_to_excel("File Name.xlsx")
 ```
 **Result:**
-![GitHub Logo](spreadsheet_example.png)
+![Spreadsheet Example](spreadsheet_example.png)
 ## API
 
 - **gender(first_name: str, last_name: str)**

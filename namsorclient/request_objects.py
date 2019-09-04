@@ -8,8 +8,17 @@ import requests
 import faker
 import random
 
-from models import *
-from country_codes import CountryCodes
+from namsorclient.models import GenderResponse
+from namsorclient.models import GenderFullResponse
+from namsorclient.models import OriginResponse
+from namsorclient.models import CountryResponse
+from namsorclient.models import RaceEthnicityResponse
+from namsorclient.models import DiasporaResponse
+from namsorclient.models import ParseNameResponse
+from namsorclient.models import NameParserTypeWrapper
+from namsorclient.models import FirstLastNameWrapper
+from namsorclient.country_codes import CountryCodes
+from namsorclient.sample_batch_responses import Sample_Responses
 
 
 class BatchItem(ABC):

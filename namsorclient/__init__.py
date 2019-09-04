@@ -2,9 +2,32 @@ import json
 import requests
 import time
 
-from models import *
-from request_objects import *
-from country_codes import CountryCodes
+from namsorclient.models import GenderResponse
+from namsorclient.models import GenderFullResponse
+from namsorclient.models import OriginResponse
+from namsorclient.models import CountryResponse
+from namsorclient.models import RaceEthnicityResponse
+from namsorclient.models import DiasporaResponse
+from namsorclient.models import ParseNameResponse
+from namsorclient.models import NameParserTypeWrapper
+from namsorclient.models import FirstLastNameWrapper
+
+from namsorclient.request_objects import GenderBatch
+from namsorclient.request_objects import GenderGeoBatch
+from namsorclient.request_objects import GenderFullBatch
+from namsorclient.request_objects import GenderFullGeoBatch
+from namsorclient.request_objects import ParsedGenderBatch
+from namsorclient.request_objects import ParsedGenderGeoBatch
+from namsorclient.request_objects import OriginBatch
+from namsorclient.request_objects import CountryBatch
+from namsorclient.request_objects import US_RaceEthnicityBatch
+from namsorclient.request_objects import US_ZipRaceEthnicityBatch
+from namsorclient.request_objects import DiasporaBatch
+from namsorclient.request_objects import ParseNameBatch
+from namsorclient.request_objects import ParseNameGeoBatch
+from namsorclient.request_objects import list_separator
+
+from namsorclient.country_codes import CountryCodes
 
 
 BASE_URL = "https://v2.namsor.com/NamSorAPIv2/api2/json/"
